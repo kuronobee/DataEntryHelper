@@ -266,5 +266,177 @@ namespace DataEntryHelper
         /// </summary>
         public string EchoSummary { get; set; } = "";
         #endregion
+
+        #region 血液検査情報
+        /// <summary>
+        /// 総蛋白(g/dL)
+        /// </summary>
+        public string TP { get; set; } = "";
+
+        /// <summary>
+        /// アルブミン(g/dL)
+        /// </summary>
+        public string Alb { get; set; } = "";
+
+        /// <summary>
+        /// 尿素窒素(mg/dL)
+        /// </summary>
+        public string BUN { get; set; } = "";
+
+        /// <summary>
+        /// クレアチニン(mg/dL)
+        /// </summary>
+        public string Cre { get; set; } = "";
+
+        /// <summary>
+        /// C反応性蛋白(mg/dL)
+        /// </summary>
+        public string CRP { get; set; } = "";
+
+        /// <summary>
+        /// クレアチンキナーゼ(U/L)
+        /// </summary>
+        public string CK { get; set; } = "";
+
+        /// <summary>
+        /// アスパラギン酸アミノトランスフェラーゼ(U/L)
+        /// </summary>
+        public string AST { get; set; } = "";
+
+        /// <summary>
+        /// アラニンアミノトランスフェラーゼ(U/L)
+        /// </summary>
+        public string ALT { get; set; } = "";
+
+        /// <summary>
+        /// LDLコレステロール(mg/dL)
+        /// </summary>
+        public string LDL { get; set; } = "";
+
+        /// <summary>
+        /// HDLコレステロール(mg/dL)
+        /// </summary>
+        public string HDL { get; set; } = "";
+
+        /// <summary>
+        /// 中性脂肪(mg/dL)
+        /// </summary>
+        public string TG { get; set; } = "";
+
+        /// <summary>
+        /// ヘモグロビンA1c(%)
+        /// </summary>
+        public string HbA1c { get; set; } = "";
+
+        /// <summary>
+        /// 血糖(mg/dL)
+        /// </summary>
+        public string Glu { get; set; } = "";
+
+        /// <summary>
+        /// ヘモグロビン(g/dL)
+        /// </summary>
+        public string Hb { get; set; } = "";
+
+        /// <summary>
+        /// 白血球数(/μL)
+        /// </summary>
+        public string WBC { get; set; } = "";
+
+        /// <summary>
+        /// 血小板数(/μL)
+        /// </summary>
+        public string Plt { get; set; } = "";
+
+        /// <summary>
+        /// プロトロンビン時間国際標準比(-)
+        /// </summary>
+        public string PTINR { get; set; } = "";
+
+        /// <summary>
+        /// 活性化部分トロンボプラスチン時間(秒)
+        /// </summary>
+        public string APTT { get; set; } = "";
+
+        /// <summary>
+        /// 線維化指数4(-)
+        /// </summary>
+        public string Fib4i { get; set; } = "";
+
+        /// <summary>
+        /// 尿酸(mg/dL)
+        /// </summary>
+        public string UA { get; set; } = "";
+
+        /// <summary>
+        /// 脳性ナトリウム利尿ペプチド(pg/mL)
+        /// </summary>
+        public string BNP { get; set; } = "";
+
+        /// <summary>
+        /// 異常値リスト
+        /// </summary>
+        public string AbnormalValues { get; set; } = "";
+
+        /// <summary>
+        /// 臨床的意義
+        /// </summary>
+        public string ClinicalImplications { get; set; } = "";
+        #endregion
+        #region 心電図・レントゲン情報
+        /// <summary>
+        /// 心拍数（心電図）
+        /// </summary>
+        public string ECG_HR { get; set; } = "";
+
+        /// <summary>
+        /// 調律（心電図）
+        /// </summary>
+        public string ECG_Rhythm { get; set; } = "";
+
+        /// <summary>
+        /// 電気軸（心電図）
+        /// </summary>
+        public string ECG_Axis { get; set; } = "";
+
+        /// <summary>
+        /// 伝導障害（心電図）
+        /// </summary>
+        public string ECG_ConductionDisturbance { get; set; } = "";
+
+        /// <summary>
+        /// ST-T変化（心電図）
+        /// </summary>
+        public string ECG_STTChange { get; set; } = "";
+
+        /// <summary>
+        /// コメント（心電図）
+        /// </summary>
+        public string ECG_Comment { get; set; } = "";
+
+        /// <summary>
+        /// 心胸郭比（レントゲン）
+        /// </summary>
+        public string XP_CTR { get; set; } = "";
+
+        /// <summary>
+        /// 肺野（レントゲン）
+        /// </summary>
+        public string XP_LungField { get; set; } = "";
+
+        /// <summary>
+        /// 肋骨横隔膜角（レントゲン）
+        /// </summary>
+        public string XP_CPAngle { get; set; } = "";
+        /// <summary>
+        /// 心電図所見要約
+        /// </summary>
+        public string ECG_Summary { get; set; } = "";
+
+        /// <summary>
+        /// レントゲン所見要約
+        /// </summary>
+        public string XP_Summary { get; set; } = "";
+        #endregion
     }
 }

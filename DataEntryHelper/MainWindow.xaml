@@ -49,6 +49,16 @@
             <TabItem Header="心エコー">
                 <controls:EchocardiogramControl x:Name="EchocardiogramCtrl"/>
             </TabItem>
+
+            <!-- 血液検査タブ -->
+            <TabItem Header="血液検査">
+                <controls:BloodTestControl x:Name="BloodTestCtrl"/>
+            </TabItem>
+
+            <!-- 心電図・レントゲンタブ -->
+            <TabItem Header="心電図・レントゲン">
+                <controls:EcgXrayControl x:Name="EcgXrayCtrl"/>
+            </TabItem>
         </TabControl>
 
         <!-- 保存ボタン -->

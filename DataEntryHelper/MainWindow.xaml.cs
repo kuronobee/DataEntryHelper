@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using System.Text.Json;
@@ -119,6 +118,52 @@ namespace DataEntryHelper
                     patientData.EchoSummary = echoData.EchoSummary;
                 }
 
+                // 血液検査データを取得して結合
+                if (BloodTestCtrl != null)
+                {
+                    BloodTestData bloodData = BloodTestCtrl.GetBloodTestData();
+                    patientData.TP = bloodData.TP;
+                    patientData.Alb = bloodData.Alb;
+                    patientData.BUN = bloodData.BUN;
+                    patientData.Cre = bloodData.Cre;
+                    patientData.CRP = bloodData.CRP;
+                    patientData.CK = bloodData.CK;
+                    patientData.AST = bloodData.AST;
+                    patientData.ALT = bloodData.ALT;
+                    patientData.LDL = bloodData.LDL;
+                    patientData.HDL = bloodData.HDL;
+                    patientData.TG = bloodData.TG;
+                    patientData.HbA1c = bloodData.HbA1c;
+                    patientData.Glu = bloodData.Glu;
+                    patientData.Hb = bloodData.Hb;
+                    patientData.WBC = bloodData.WBC;
+                    patientData.Plt = bloodData.Plt;
+                    patientData.PTINR = bloodData.PTINR;
+                    patientData.APTT = bloodData.APTT;
+                    patientData.Fib4i = bloodData.Fib4i;
+                    patientData.UA = bloodData.UA;
+                    patientData.BNP = bloodData.BNP;
+                    patientData.AbnormalValues = bloodData.AbnormalValues;
+                    patientData.ClinicalImplications = bloodData.ClinicalImplications;
+                }
+
+                // 心電図・レントゲンデータを取得して結合
+                if (EcgXrayCtrl != null)
+                {
+                    EcgXrayData ecgXrayData = EcgXrayCtrl.GetEcgXrayData();
+                    patientData.ECG_HR = ecgXrayData.ECG_HR;
+                    patientData.ECG_Rhythm = ecgXrayData.ECG_Rhythm;
+                    patientData.ECG_Axis = ecgXrayData.ECG_Axis;
+                    patientData.ECG_ConductionDisturbance = ecgXrayData.ECG_ConductionDisturbance;
+                    patientData.ECG_STTChange = ecgXrayData.ECG_STTChange;
+                    patientData.ECG_Comment = ecgXrayData.ECG_Comment;
+                    patientData.ECG_Summary = ecgXrayData.ECG_Summary;
+                    patientData.XP_CTR = ecgXrayData.XP_CTR;
+                    patientData.XP_LungField = ecgXrayData.XP_LungField;
+                    patientData.XP_CPAngle = ecgXrayData.XP_CPAngle;
+                    patientData.XP_Summary = ecgXrayData.XP_Summary;
+                }
+
                 // ディレクトリがなければ作成
                 string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PatientData");
                 Directory.CreateDirectory(directoryPath);
@@ -150,6 +195,16 @@ namespace DataEntryHelper
             if (EchocardiogramCtrl != null)
             {
                 EchocardiogramCtrl.ClearData();
+            }
+
+            if (BloodTestCtrl != null)
+            {
+                BloodTestCtrl.ClearData();
+            }
+
+            if (EcgXrayCtrl != null)
+            {
+                EcgXrayCtrl.ClearData();
             }
 
             // 患者データタブに戻る
