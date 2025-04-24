@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataEntryHelper.Repository
+namespace DataEntryHelper.Entity
 {
     public class Field
     {

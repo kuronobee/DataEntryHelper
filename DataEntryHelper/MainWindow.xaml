@@ -1,12 +1,55 @@
-﻿<Window x:Class="DataEntryHelper.MainWindow"
+﻿<!-- MainWindow.xaml -->
+<Window x:Class="DataEntryHelper.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DataEntryHelper"
+        xmlns:controls="clr-namespace:DataEntryHelper.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="患者データ入力フォーム" Height="700" Width="800">
+    <Window.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="5" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <!-- タブコントロール -->
+        <TabControl x:Name="MainTabControl" Grid.Row="0" SelectionChanged="MainTabControl_SelectionChanged">
+            <!-- 患者データ入力タブ -->
+            <TabItem Header="患者データ入力">
+                <controls:PatientDataControl x:Name="PatientDataCtrl" RiskFactorsChanged="PatientDataCtrl_RiskFactorsChanged"/>
+            </TabItem>
+
+            <!-- 心房細動タブ -->
+            <TabItem Header="心房細動">
+                <controls:AtrialFibrillationControl x:Name="AtrialFibrillationCtrl"/>
+            </TabItem>
+        </TabControl>
+
+        <!-- 保存ボタン -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+            <Button x:Name="SaveButton" Content="保存" Width="100" Height="30" Margin="5" Click="SaveButton_Click"/>
+            <Button x:Name="ClearButton" Content="クリア" Width="100" Height="30" Margin="5" Click="ClearButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
