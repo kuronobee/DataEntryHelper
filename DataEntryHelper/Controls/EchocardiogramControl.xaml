@@ -1,0 +1,122 @@
+﻿<!-- EchocardiogramControl.xaml -->
+<UserControl x:Class="DataEntryHelper.Controls.EchocardiogramControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataEntryHelper.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+            <GroupBox Header="心エコー">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0 - 左室パラメータ -->
+                    <Label Grid.Row="0" Grid.Column="0" Content="IVSd (mm):"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="IvsdTextBox"/>
+
+                    <Label Grid.Row="0" Grid.Column="2" Content="LVPWd (mm):"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="LvpwdTextBox"/>
+
+                    <!-- Row 1 -->
+                    <Label Grid.Row="1" Grid.Column="0" Content="LVDd (mm):"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="LvddTextBox"/>
+
+                    <Label Grid.Row="1" Grid.Column="2" Content="LVDs (mm):"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" x:Name="LvdsTextBox"/>
+
+                    <!-- Row 2 -->
+                    <Label Grid.Row="2" Grid.Column="0" Content="EDV (ml):"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="EdvTextBox"/>
+
+                    <Label Grid.Row="2" Grid.Column="2" Content="ESV (ml):"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" x:Name="EsvTextBox"/>
+
+                    <!-- Row 3 - 左房パラメータ -->
+                    <Label Grid.Row="3" Grid.Column="0" Content="LAD (mm):"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="LadTextBox"/>
+
+                    <Label Grid.Row="3" Grid.Column="2" Content="LAV (ml):"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" x:Name="LavTextBox"/>
+
+                    <!-- Row 4 - 収縮機能 -->
+                    <Label Grid.Row="4" Grid.Column="0" Content="LVEF (%):"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="LvefTextBox" TextChanged="LvefTextBox_TextChanged"/>
+
+                    <Label Grid.Row="4" Grid.Column="2" Content="心不全タイプ:"/>
+                    <TextBox Grid.Row="4" Grid.Column="3" x:Name="HeartFailureTypeTextBox" IsReadOnly="True" Background="LightGray"/>
+
+                    <!-- Row 5 - 壁運動異常 -->
+                    <Label Grid.Row="5" Grid.Column="0" Content="focal asynergy:"/>
+                    <ComboBox Grid.Row="5" Grid.Column="1" x:Name="FocalAsynergyComboBox">
+                        <ComboBoxItem Content="あり"/>
+                        <ComboBoxItem Content="なし"/>
+                    </ComboBox>
+
+                    <Label Grid.Row="5" Grid.Column="2" Content="VHD(≧moderate):"/>
+                    <ComboBox Grid.Row="5" Grid.Column="3" x:Name="VhdComboBox">
+                        <ComboBoxItem Content="あり"/>
+                        <ComboBoxItem Content="なし"/>
+                    </ComboBox>
+
+                    <!-- Row 6 - 拡張能 -->
+                    <Label Grid.Row="6" Grid.Column="0" Content="E波 (cm/s):"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="EWaveTextBox" TextChanged="CalculateDiastolicParameters"/>
+
+                    <Label Grid.Row="6" Grid.Column="2" Content="A波 (cm/s):"/>
+                    <TextBox Grid.Row="6" Grid.Column="3" x:Name="AWaveTextBox" TextChanged="CalculateDiastolicParameters"/>
+
+                    <!-- Row 7 - E/A比 -->
+                    <Label Grid.Row="7" Grid.Column="0" Content="E/A:"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" x:Name="EaRatioTextBox" IsReadOnly="True" Background="LightGray"/>
+
+                    <!-- Row 8 - 組織ドプラ -->
+                    <Label Grid.Row="8" Grid.Column="0" Content="e'_sept (cm/s):"/>
+                    <TextBox Grid.Row="8" Grid.Column="1" x:Name="EPrimeSeptTextBox" TextChanged="CalculateDiastolicParameters"/>
+
+                    <Label Grid.Row="8" Grid.Column="2" Content="E/e':"/>
+                    <TextBox Grid.Row="8" Grid.Column="3" x:Name="EePrimeRatioTextBox" IsReadOnly="True" Background="LightGray"/>
+
+                    <!-- Row 9 - 右心系 -->
+                    <Label Grid.Row="9" Grid.Column="0" Content="TR-PG (mmHg):"/>
+                    <TextBox Grid.Row="9" Grid.Column="1" x:Name="TrPgTextBox"/>
+
+                    <Label Grid.Row="9" Grid.Column="2" Content="IVC_insp (mm):"/>
+                    <TextBox Grid.Row="9" Grid.Column="3" x:Name="IvcInspTextBox"/>
+
+                    <!-- Row 10 - 下大静脈と備考 -->
+                    <Label Grid.Row="10" Grid.Column="0" Content="IVC_exp (mm):"/>
+                    <TextBox Grid.Row="10" Grid.Column="1" x:Name="IvcExpTextBox"/>
+
+                    <Label Grid.Row="10" Grid.Column="2" Content="other disorder:"/>
+                    <TextBox Grid.Row="10" Grid.Column="3" x:Name="OtherDisorderTextBox"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- 心エコーレポート概要 -->
+            <GroupBox Header="心エコーレポート概要" Margin="0,10,0,0">
+                <TextBlock x:Name="EchoSummaryTextBlock" TextWrapping="Wrap" Margin="5" MinHeight="80"/>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -21,10 +21,20 @@ namespace DataEntryHelper
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TabItem selectedTab = MainTabControl.SelectedItem as TabItem;
-            if (selectedTab != null && selectedTab.Header.ToString() == "心房細動")
+            if (selectedTab != null)
             {
-                // 心房細動タブが選択された場合にスコア計算を更新
-                UpdateAtrialFibrillationRiskScores();
+                string tabHeader = selectedTab.Header.ToString();
+
+                if (tabHeader == "心房細動")
+                {
+                    // 心房細動タブが選択された場合にスコア計算を更新
+                    UpdateAtrialFibrillationRiskScores();
+                }
+                else if (tabHeader == "心エコー")
+                {
+                    // 心エコータブが選択された場合に心不全情報を更新
+                    UpdateEchocardiogramHeartFailureStatus();
+                }
             }
         }
 
@@ -33,6 +43,9 @@ namespace DataEntryHelper
         {
             // リスク因子が変更された場合、心房細動タブのスコアを更新
             UpdateAtrialFibrillationRiskScores();
+
+            // 心不全情報も更新
+            UpdateEchocardiogramHeartFailureStatus();
         }
 
         // 心房細動リスクスコア更新
@@ -43,6 +56,20 @@ namespace DataEntryHelper
                 // 患者データコントロールからデータを取得してリスクスコアを更新
                 PatientData patientData = PatientDataCtrl.GetPatientData();
                 AtrialFibrillationCtrl.UpdateRiskScores(patientData);
+            }
+        }
+
+        // 心エコーの心不全情報更新
+        private void UpdateEchocardiogramHeartFailureStatus()
+        {
+            if (EchocardiogramCtrl != null && PatientDataCtrl != null)
+            {
+                // 患者データから心不全情報を取得
+                PatientData patientData = PatientDataCtrl.GetPatientData();
+                bool hasHeartFailure = patientData.HeartFailure == "あり";
+
+                // 心エコーコントロールに心不全情報を渡す
+                EchocardiogramCtrl.UpdateHeartFailureStatus(hasHeartFailure);
             }
         }
 
@@ -62,6 +89,34 @@ namespace DataEntryHelper
                     patientData.AtrialFibrillationSymptoms = afData.AtrialFibrillationSymptoms;
                     patientData.Chads2Score = afData.Chads2Score;
                     patientData.Cha2ds2VascScore = afData.Cha2ds2VascScore;
+                }
+
+                // 心エコーデータを取得して結合
+                if (EchocardiogramCtrl != null)
+                {
+                    EchocardiogramData echoData = EchocardiogramCtrl.GetEchocardiogramData();
+                    patientData.IVSd = echoData.IVSd;
+                    patientData.LVPWd = echoData.LVPWd;
+                    patientData.LVDd = echoData.LVDd;
+                    patientData.LVDs = echoData.LVDs;
+                    patientData.EDV = echoData.EDV;
+                    patientData.ESV = echoData.ESV;
+                    patientData.LAD = echoData.LAD;
+                    patientData.LAV = echoData.LAV;
+                    patientData.LVEF = echoData.LVEF;
+                    patientData.HeartFailureType = echoData.HeartFailureType;
+                    patientData.FocalAsynergy = echoData.FocalAsynergy;
+                    patientData.VHD = echoData.VHD;
+                    patientData.EWave = echoData.EWave;
+                    patientData.AWave = echoData.AWave;
+                    patientData.EARatio = echoData.EARatio;
+                    patientData.EPrimeSept = echoData.EPrimeSept;
+                    patientData.EEPrimeRatio = echoData.EEPrimeRatio;
+                    patientData.TRPG = echoData.TRPG;
+                    patientData.IVCInsp = echoData.IVCInsp;
+                    patientData.IVCExp = echoData.IVCExp;
+                    patientData.OtherDisorder = echoData.OtherDisorder;
+                    patientData.EchoSummary = echoData.EchoSummary;
                 }
 
                 // ディレクトリがなければ作成
@@ -91,6 +146,11 @@ namespace DataEntryHelper
             // 全てのユーザーコントロールのデータをクリア
             PatientDataCtrl.ClearData();
             AtrialFibrillationCtrl.ClearData();
+
+            if (EchocardiogramCtrl != null)
+            {
+                EchocardiogramCtrl.ClearData();
+            }
 
             // 患者データタブに戻る
             MainTabControl.SelectedIndex = 0;

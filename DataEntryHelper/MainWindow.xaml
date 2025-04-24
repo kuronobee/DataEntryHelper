@@ -44,6 +44,11 @@
             <TabItem Header="心房細動">
                 <controls:AtrialFibrillationControl x:Name="AtrialFibrillationCtrl"/>
             </TabItem>
+
+            <!-- 心エコータブ -->
+            <TabItem Header="心エコー">
+                <controls:EchocardiogramControl x:Name="EchocardiogramCtrl"/>
+            </TabItem>
         </TabControl>
 
         <!-- 保存ボタン -->
