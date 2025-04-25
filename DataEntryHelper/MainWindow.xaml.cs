@@ -271,6 +271,32 @@ namespace DataEntryHelper
                     patientData.MedicationSummary = medData.MedicationSummary;
                 }
 
+                // アブレーションデータを取得して結合（追加部分）
+                if (AblationCtrl != null)
+                {
+                    AblationData ablationData = AblationCtrl.GetAblationData();
+                    patientData.MappingSystem = ablationData.MappingSystem;
+                    patientData.MappingRhythm = ablationData.MappingRhythm;
+                    patientData.PacingSite = ablationData.PacingSite;
+                    patientData.PreMap = ablationData.PreMap;
+                    patientData.ProcedureCount = ablationData.ProcedureCount;
+                    patientData.ProcedurePVI = ablationData.ProcedurePVI;
+                    patientData.ProcedurePosteriorWallIsolation = ablationData.ProcedurePosteriorWallIsolation;
+                    patientData.ProcedureCFAE_FAAM = ablationData.ProcedureCFAE_FAAM;
+                    patientData.ProcedureOther = ablationData.ProcedureOther;
+                    patientData.Result = ablationData.Result;
+                    patientData.LVAs = ablationData.LVAs;
+                    patientData.VGLA = ablationData.VGLA;
+                    patientData.MaxVoltageAnterior = ablationData.MaxVoltageAnterior;
+                    patientData.MaxVoltageSeptum = ablationData.MaxVoltageSeptum;
+                    patientData.MaxVoltageRoof = ablationData.MaxVoltageRoof;
+                    patientData.MaxVoltageInf = ablationData.MaxVoltageInf;
+                    patientData.MaxVoltagePost = ablationData.MaxVoltagePost;
+                    patientData.MaxVoltageLat = ablationData.MaxVoltageLat;
+                    patientData.MaxVoltageMean = ablationData.MaxVoltageMean;
+                    patientData.AblationSummary = ablationData.AblationSummary;
+                }
+
                 // ディレクトリがなければ作成
                 string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PatientData");
                 Directory.CreateDirectory(directoryPath);
@@ -317,6 +343,12 @@ namespace DataEntryHelper
             if (MedicationCtrl != null)
             {
                 MedicationCtrl.ClearData();
+            }
+
+            // アブレーションデータクリア（追加部分）
+            if (AblationCtrl != null)
+            {
+                AblationCtrl.ClearData();
             }
 
             // 患者データタブに戻る

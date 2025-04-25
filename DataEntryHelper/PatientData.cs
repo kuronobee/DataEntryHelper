@@ -809,5 +809,108 @@ namespace DataEntryHelper
         /// </summary>
         public string MedicationSummary { get; set; } = "";
         #endregion
+        // PatientData.cs に追加
+
+        #region アブレーション情報
+        /// <summary>
+        /// マッピングシステム
+        /// </summary>
+        public string MappingSystem { get; set; } = "";
+
+        /// <summary>
+        /// マッピングリズム
+        /// </summary>
+        public string MappingRhythm { get; set; } = "";
+
+        /// <summary>
+        /// ペーシング部位
+        /// </summary>
+        public string PacingSite { get; set; } = "";
+
+        /// <summary>
+        /// プレマップ
+        /// </summary>
+        public string PreMap { get; set; } = "";
+
+        /// <summary>
+        /// 施行回数
+        /// </summary>
+        public string ProcedureCount { get; set; } = "";
+
+        /// <summary>
+        /// 処置内容: PVI
+        /// </summary>
+        public bool ProcedurePVI { get; set; } = false;
+
+        /// <summary>
+        /// 処置内容: 後壁隔離
+        /// </summary>
+        public bool ProcedurePosteriorWallIsolation { get; set; } = false;
+
+        /// <summary>
+        /// 処置内容: CFAE/FAAM
+        /// </summary>
+        public bool ProcedureCFAE_FAAM { get; set; } = false;
+
+        /// <summary>
+        /// 処置内容: その他
+        /// </summary>
+        public string ProcedureOther { get; set; } = "";
+
+        /// <summary>
+        /// 結果
+        /// </summary>
+        public string Result { get; set; } = "";
+
+        /// <summary>
+        /// LVAs(&lt;0.5mV)(cm^2)
+        /// </summary>
+        public string LVAs { get; set; } = "";
+
+        /// <summary>
+        /// V GLA(voltage global lt. atria)(mV)
+        /// </summary>
+        public string VGLA { get; set; } = "";
+
+        /// <summary>
+        /// LA Mapping Max voltage Anterior(mV)
+        /// </summary>
+        public string MaxVoltageAnterior { get; set; } = "";
+
+        /// <summary>
+        /// LA Mapping Max voltage Septum(mV)
+        /// </summary>
+        public string MaxVoltageSeptum { get; set; } = "";
+
+        /// <summary>
+        /// LA Mapping Max voltage Roof(mV)
+        /// </summary>
+        public string MaxVoltageRoof { get; set; } = "";
+
+        /// <summary>
+        /// LA Mapping Max voltage Inf(mV)
+        /// </summary>
+        public string MaxVoltageInf { get; set; } = "";
+
+        /// <summary>
+        /// LA Mapping Max voltage Post(mV)
+        /// </summary>
+        public string MaxVoltagePost { get; set; } = "";
+
+        /// <summary>
+        /// LA Mapping Max voltage Lat(mV)
+        /// </summary>
+        public string MaxVoltageLat { get; set; } = "";
+
+        /// <summary>
+        /// LA Mapping Max voltage mean(mV)
+        /// </summary>
+        public string MaxVoltageMean { get; set; } = "";
+
+        /// <summary>
+        /// アブレーションレポート概要
+        /// </summary>
+        public string AblationSummary { get; set; } = "";
+        #endregion
     }
 }
