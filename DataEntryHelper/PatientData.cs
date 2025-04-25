@@ -438,5 +438,376 @@ namespace DataEntryHelper
         /// </summary>
         public string XP_Summary { get; set; } = "";
         #endregion
+        #region 薬物療法情報
+        /// <summary>
+        /// βブロッカー使用有無
+        /// </summary>
+        public string BetaBlocker { get; set; } = "";
+
+        /// <summary>
+        /// βブロッカー薬剤名1
+        /// </summary>
+        public string BetaBlockerName1 { get; set; } = "";
+
+        /// <summary>
+        /// βブロッカー用量1(mg)
+        /// </summary>
+        public string BetaBlockerDose1 { get; set; } = "";
+
+        /// <summary>
+        /// βブロッカー薬剤名2
+        /// </summary>
+        public string BetaBlockerName2 { get; set; } = "";
+
+        /// <summary>
+        /// βブロッカー用量2(mg)
+        /// </summary>
+        public string BetaBlockerDose2 { get; set; } = "";
+
+        /// <summary>
+        /// βブロッカー薬剤名3
+        /// </summary>
+        public string BetaBlockerName3 { get; set; } = "";
+
+        /// <summary>
+        /// βブロッカー用量3(mg)
+        /// </summary>
+        public string BetaBlockerDose3 { get; set; } = "";
+
+        /// <summary>
+        /// カルシウム拮抗薬使用有無
+        /// </summary>
+        public string CCB { get; set; } = "";
+
+        /// <summary>
+        /// カルシウム拮抗薬薬剤名1
+        /// </summary>
+        public string CCBName1 { get; set; } = "";
+
+        /// <summary>
+        /// カルシウム拮抗薬用量1(mg)
+        /// </summary>
+        public string CCBDose1 { get; set; } = "";
+
+        /// <summary>
+        /// カルシウム拮抗薬薬剤名2
+        /// </summary>
+        public string CCBName2 { get; set; } = "";
+
+        /// <summary>
+        /// カルシウム拮抗薬用量2(mg)
+        /// </summary>
+        public string CCBDose2 { get; set; } = "";
+
+        /// <summary>
+        /// カルシウム拮抗薬薬剤名3
+        /// </summary>
+        public string CCBName3 { get; set; } = "";
+
+        /// <summary>
+        /// カルシウム拮抗薬用量3(mg)
+        /// </summary>
+        public string CCBDose3 { get; set; } = "";
+
+        /// <summary>
+        /// 抗不整脈薬使用有無
+        /// </summary>
+        public string AntiArrhythmicDrug { get; set; } = "";
+
+        /// <summary>
+        /// 抗不整脈薬薬剤名1
+        /// </summary>
+        public string AntiArrhythmicDrugName1 { get; set; } = "";
+
+        /// <summary>
+        /// 抗不整脈薬用量1(mg)
+        /// </summary>
+        public string AntiArrhythmicDrugDose1 { get; set; } = "";
+
+        /// <summary>
+        /// 抗不整脈薬薬剤名2
+        /// </summary>
+        public string AntiArrhythmicDrugName2 { get; set; } = "";
+
+        /// <summary>
+        /// 抗不整脈薬用量2(mg)
+        /// </summary>
+        public string AntiArrhythmicDrugDose2 { get; set; } = "";
+
+        /// <summary>
+        /// 抗不整脈薬薬剤名3
+        /// </summary>
+        public string AntiArrhythmicDrugName3 { get; set; } = "";
+
+        /// <summary>
+        /// 抗不整脈薬用量3(mg)
+        /// </summary>
+        public string AntiArrhythmicDrugDose3 { get; set; } = "";
+
+        /// <summary>
+        /// DOAC使用有無
+        /// </summary>
+        public string DOAC { get; set; } = "";
+
+        /// <summary>
+        /// DOAC薬剤名1
+        /// </summary>
+        public string DOACName1 { get; set; } = "";
+
+        /// <summary>
+        /// DOAC用量1(mg)
+        /// </summary>
+        public string DOACDose1 { get; set; } = "";
+
+        /// <summary>
+        /// DOAC薬剤名2
+        /// </summary>
+        public string DOACName2 { get; set; } = "";
+
+        /// <summary>
+        /// DOAC用量2(mg)
+        /// </summary>
+        public string DOACDose2 { get; set; } = "";
+
+        /// <summary>
+        /// DOAC薬剤名3
+        /// </summary>
+        public string DOACName3 { get; set; } = "";
+
+        /// <summary>
+        /// DOAC用量3(mg)
+        /// </summary>
+        public string DOACDose3 { get; set; } = "";
+
+        /// <summary>
+        /// VKA使用有無
+        /// </summary>
+        public string VKA { get; set; } = "";
+
+        /// <summary>
+        /// VKA用量(mg)
+        /// </summary>
+        public string VKADose { get; set; } = "";
+
+        /// <summary>
+        /// スタチン使用有無
+        /// </summary>
+        public string Statin { get; set; } = "";
+
+        /// <summary>
+        /// スタチン薬剤名1
+        /// </summary>
+        public string StatinName1 { get; set; } = "";
+
+        /// <summary>
+        /// スタチン用量1(mg)
+        /// </summary>
+        public string StatinDose1 { get; set; } = "";
+
+        /// <summary>
+        /// スタチン薬剤名2
+        /// </summary>
+        public string StatinName2 { get; set; } = "";
+
+        /// <summary>
+        /// スタチン用量2(mg)
+        /// </summary>
+        public string StatinDose2 { get; set; } = "";
+
+        /// <summary>
+        /// スタチン薬剤名3
+        /// </summary>
+        public string StatinName3 { get; set; } = "";
+
+        /// <summary>
+        /// スタチン用量3(mg)
+        /// </summary>
+        public string StatinDose3 { get; set; } = "";
+
+        /// <summary>
+        /// SGLT2阻害薬使用有無
+        /// </summary>
+        public string SGLT2i { get; set; } = "";
+
+        /// <summary>
+        /// SGLT2阻害薬薬剤名1
+        /// </summary>
+        public string SGLT2iName1 { get; set; } = "";
+
+        /// <summary>
+        /// SGLT2阻害薬用量1(mg)
+        /// </summary>
+        public string SGLT2iDose1 { get; set; } = "";
+
+        /// <summary>
+        /// SGLT2阻害薬薬剤名2
+        /// </summary>
+        public string SGLT2iName2 { get; set; } = "";
+
+        /// <summary>
+        /// SGLT2阻害薬用量2(mg)
+        /// </summary>
+        public string SGLT2iDose2 { get; set; } = "";
+
+        /// <summary>
+        /// SGLT2阻害薬薬剤名3
+        /// </summary>
+        public string SGLT2iName3 { get; set; } = "";
+
+        /// <summary>
+        /// SGLT2阻害薬用量3(mg)
+        /// </summary>
+        public string SGLT2iDose3 { get; set; } = "";
+
+        /// <summary>
+        /// ACE阻害薬/ARB/ARNi使用有無
+        /// </summary>
+        public string RAAS { get; set; } = "";
+
+        /// <summary>
+        /// ACE阻害薬/ARB/ARNi薬剤名1
+        /// </summary>
+        public string RAASName1 { get; set; } = "";
+
+        /// <summary>
+        /// ACE阻害薬/ARB/ARNi用量1(mg)
+        /// </summary>
+        public string RAASDose1 { get; set; } = "";
+
+        /// <summary>
+        /// ACE阻害薬/ARB/ARNi薬剤名2
+        /// </summary>
+        public string RAASName2 { get; set; } = "";
+
+        /// <summary>
+        /// ACE阻害薬/ARB/ARNi用量2(mg)
+        /// </summary>
+        public string RAASDose2 { get; set; } = "";
+
+        /// <summary>
+        /// ACE阻害薬/ARB/ARNi薬剤名3
+        /// </summary>
+        public string RAASName3 { get; set; } = "";
+
+        /// <summary>
+        /// ACE阻害薬/ARB/ARNi用量3(mg)
+        /// </summary>
+        public string RAASDose3 { get; set; } = "";
+
+        /// <summary>
+        /// MRA使用有無
+        /// </summary>
+        public string MRA { get; set; } = "";
+
+        /// <summary>
+        /// MRA薬剤名1
+        /// </summary>
+        public string MRAName1 { get; set; } = "";
+
+        /// <summary>
+        /// MRA用量1(mg)
+        /// </summary>
+        public string MRADose1 { get; set; } = "";
+
+        /// <summary>
+        /// MRA薬剤名2
+        /// </summary>
+        public string MRAName2 { get; set; } = "";
+
+        /// <summary>
+        /// MRA用量2(mg)
+        /// </summary>
+        public string MRADose2 { get; set; } = "";
+
+        /// <summary>
+        /// MRA薬剤名3
+        /// </summary>
+        public string MRAName3 { get; set; } = "";
+
+        /// <summary>
+        /// MRA用量3(mg)
+        /// </summary>
+        public string MRADose3 { get; set; } = "";
+
+        /// <summary>
+        /// 利尿薬使用有無
+        /// </summary>
+        public string Diuretics { get; set; } = "";
+
+        /// <summary>
+        /// 利尿薬薬剤名1
+        /// </summary>
+        public string DiureticsName1 { get; set; } = "";
+
+        /// <summary>
+        /// 利尿薬用量1(mg)
+        /// </summary>
+        public string DiureticsDose1 { get; set; } = "";
+
+        /// <summary>
+        /// 利尿薬薬剤名2
+        /// </summary>
+        public string DiureticsName2 { get; set; } = "";
+
+        /// <summary>
+        /// 利尿薬用量2(mg)
+        /// </summary>
+        public string DiureticsDose2 { get; set; } = "";
+
+        /// <summary>
+        /// 利尿薬薬剤名3
+        /// </summary>
+        public string DiureticsName3 { get; set; } = "";
+
+        /// <summary>
+        /// 利尿薬用量3(mg)
+        /// </summary>
+        public string DiureticsDose3 { get; set; } = "";
+
+        /// <summary>
+        /// 抗血小板薬使用有無
+        /// </summary>
+        public string AntiplateletAgent { get; set; } = "";
+
+        /// <summary>
+        /// 抗血小板薬薬剤名1
+        /// </summary>
+        public string AntiplateletAgentName1 { get; set; } = "";
+
+        /// <summary>
+        /// 抗血小板薬用量1(mg)
+        /// </summary>
+        public string AntiplateletAgentDose1 { get; set; } = "";
+
+        /// <summary>
+        /// 抗血小板薬薬剤名2
+        /// </summary>
+        public string AntiplateletAgentName2 { get; set; } = "";
+
+        /// <summary>
+        /// 抗血小板薬用量2(mg)
+        /// </summary>
+        public string AntiplateletAgentDose2 { get; set; } = "";
+
+        /// <summary>
+        /// 抗血小板薬薬剤名3
+        /// </summary>
+        public string AntiplateletAgentName3 { get; set; } = "";
+
+        /// <summary>
+        /// 抗血小板薬用量3(mg)
+        /// </summary>
+        public string AntiplateletAgentDose3 { get; set; } = "";
+
+        /// <summary>
+        /// その他の薬剤情報
+        /// </summary>
+        public string OtherMedications { get; set; } = "";
+
+        /// <summary>
+        /// 薬物療法要約
+        /// </summary>
+        public string MedicationSummary { get; set; } = "";
+        #endregion
     }
 }

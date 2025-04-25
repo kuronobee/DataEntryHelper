@@ -1,0 +1,765 @@
+﻿<!-- MedicationControl.xaml -->
+<UserControl x:Class="DataEntryHelper.Controls.MedicationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataEntryHelper.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="MedicationGroupStyle" TargetType="GroupBox">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#CCCCCC" />
+        </Style>
+        <Style x:Key="MedicationLabelStyle" TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style x:Key="MedicationComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="IsEditable" Value="True" />
+            <Setter Property="IsTextSearchEnabled" Value="True" />
+        </Style>
+        <Style x:Key="MedicationTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 薬物療法セクション -->
+            <DockPanel Grid.Row="0" LastChildFill="True">
+                <GroupBox DockPanel.Dock="Top" Header="薬物療法" Style="{StaticResource MedicationGroupStyle}">
+                    <StackPanel>
+                        <!-- βブロッカー -->
+                        <GroupBox Header="βブロッカー" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- β使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="BetaBlockerComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- β 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="BetaBlockerName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="ビソプロロール"/>
+                                    <ComboBoxItem Content="カルベジロール"/>
+                                    <ComboBoxItem Content="メトプロロール"/>
+                                    <ComboBoxItem Content="アテノロール"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="BetaBlockerDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- β 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="BetaBlockerName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="ビソプロロール"/>
+                                    <ComboBoxItem Content="カルベジロール"/>
+                                    <ComboBoxItem Content="メトプロロール"/>
+                                    <ComboBoxItem Content="アテノロール"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="BetaBlockerDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- β 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="BetaBlockerName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="ビソプロロール"/>
+                                    <ComboBoxItem Content="カルベジロール"/>
+                                    <ComboBoxItem Content="メトプロロール"/>
+                                    <ComboBoxItem Content="アテノロール"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="BetaBlockerDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- カルシウム拮抗薬 -->
+                        <GroupBox Header="カルシウム拮抗薬 (CCB)" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- CCB使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="CCBComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- CCB 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="CCBName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="アムロジピン"/>
+                                    <ComboBoxItem Content="ニフェジピン"/>
+                                    <ComboBoxItem Content="アゼルニジピン"/>
+                                    <ComboBoxItem Content="シルニジピン"/>
+                                    <ComboBoxItem Content="ベニジピン"/>
+                                    <ComboBoxItem Content="ニカルジピン"/>
+                                    <ComboBoxItem Content="ニルバジピン"/>
+                                    <ComboBoxItem Content="エホニジピン"/>
+                                    <ComboBoxItem Content="マニジピン"/>
+                                    <ComboBoxItem Content="ニソルジピン"/>
+                                    <ComboBoxItem Content="ニトレンジピン"/>
+                                    <ComboBoxItem Content="フェロジピン"/>
+                                    <ComboBoxItem Content="ベラパミル"/>
+                                    <ComboBoxItem Content="ジルチアゼム"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="CCBDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- CCB 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="CCBName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="アムロジピン"/>
+                                    <ComboBoxItem Content="ニフェジピン"/>
+                                    <ComboBoxItem Content="アゼルニジピン"/>
+                                    <ComboBoxItem Content="シルニジピン"/>
+                                    <ComboBoxItem Content="ベニジピン"/>
+                                    <ComboBoxItem Content="ニカルジピン"/>
+                                    <ComboBoxItem Content="ニルバジピン"/>
+                                    <ComboBoxItem Content="エホニジピン"/>
+                                    <ComboBoxItem Content="マニジピン"/>
+                                    <ComboBoxItem Content="ニソルジピン"/>
+                                    <ComboBoxItem Content="ニトレンジピン"/>
+                                    <ComboBoxItem Content="フェロジピン"/>
+                                    <ComboBoxItem Content="ベラパミル"/>
+                                    <ComboBoxItem Content="ジルチアゼム"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="CCBDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- CCB 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="CCBName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="アムロジピン"/>
+                                    <ComboBoxItem Content="ニフェジピン"/>
+                                    <ComboBoxItem Content="アゼルニジピン"/>
+                                    <ComboBoxItem Content="シルニジピン"/>
+                                    <ComboBoxItem Content="ベニジピン"/>
+                                    <ComboBoxItem Content="ニカルジピン"/>
+                                    <ComboBoxItem Content="ニルバジピン"/>
+                                    <ComboBoxItem Content="エホニジピン"/>
+                                    <ComboBoxItem Content="マニジピン"/>
+                                    <ComboBoxItem Content="ニソルジピン"/>
+                                    <ComboBoxItem Content="ニトレンジピン"/>
+                                    <ComboBoxItem Content="フェロジピン"/>
+                                    <ComboBoxItem Content="ベラパミル"/>
+                                    <ComboBoxItem Content="ジルチアゼム"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="CCBDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- 抗不整脈薬 -->
+                        <GroupBox Header="抗不整脈薬" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- 抗不整脈薬使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AntiArrhythmicDrugComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- 抗不整脈薬 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="AntiArrhythmicDrugName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="シベンゾリン"/>
+                                    <ComboBoxItem Content="ジソピラミド"/>
+                                    <ComboBoxItem Content="プロカインアミド"/>
+                                    <ComboBoxItem Content="ピルジカイニド"/>
+                                    <ComboBoxItem Content="ベプリジル"/>
+                                    <ComboBoxItem Content="ソタロール"/>
+                                    <ComboBoxItem Content="アミオダロン"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="AntiArrhythmicDrugDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- 抗不整脈薬 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="AntiArrhythmicDrugName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="シベンゾリン"/>
+                                    <ComboBoxItem Content="ジソピラミド"/>
+                                    <ComboBoxItem Content="プロカインアミド"/>
+                                    <ComboBoxItem Content="ピルジカイニド"/>
+                                    <ComboBoxItem Content="ベプリジル"/>
+                                    <ComboBoxItem Content="ソタロール"/>
+                                    <ComboBoxItem Content="アミオダロン"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="AntiArrhythmicDrugDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- 抗不整脈薬 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="AntiArrhythmicDrugName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="シベンゾリン"/>
+                                    <ComboBoxItem Content="ジソピラミド"/>
+                                    <ComboBoxItem Content="プロカインアミド"/>
+                                    <ComboBoxItem Content="ピルジカイニド"/>
+                                    <ComboBoxItem Content="ベプリジル"/>
+                                    <ComboBoxItem Content="ソタロール"/>
+                                    <ComboBoxItem Content="アミオダロン"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="AntiArrhythmicDrugDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- DOAC -->
+                        <GroupBox Header="DOAC" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- DOAC使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="DOACComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- DOAC 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="DOACName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="エドキサバン"/>
+                                    <ComboBoxItem Content="アピキサバン"/>
+                                    <ComboBoxItem Content="ダビガトラン"/>
+                                    <ComboBoxItem Content="リバーロキサバン"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="DOACDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- DOAC 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="DOACName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="エドキサバン"/>
+                                    <ComboBoxItem Content="アピキサバン"/>
+                                    <ComboBoxItem Content="ダビガトラン"/>
+                                    <ComboBoxItem Content="リバーロキサバン"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="DOACDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- DOAC 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="DOACName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="エドキサバン"/>
+                                    <ComboBoxItem Content="アピキサバン"/>
+                                    <ComboBoxItem Content="ダビガトラン"/>
+                                    <ComboBoxItem Content="リバーロキサバン"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="DOACDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- VKA -->
+                        <GroupBox Header="VKA (ワルファリン)" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- VKA使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="VKAComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <Label Grid.Row="0" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="0" Grid.Column="3" x:Name="VKADoseTextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- スタチン -->
+                        <GroupBox Header="スタチン" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- スタチン使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="StatinComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- スタチン 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="StatinName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="プラバスタチン"/>
+                                    <ComboBoxItem Content="シンバスタチン"/>
+                                    <ComboBoxItem Content="フルバスタチン"/>
+                                    <ComboBoxItem Content="アトルバスタチン"/>
+                                    <ComboBoxItem Content="ロスバスタチン"/>
+                                    <ComboBoxItem Content="ピタバスタチン"/>
+                                    <ComboBoxItem Content="ロバスタチン"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="StatinDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                                <!-- スタチン 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="StatinName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="プラバスタチン"/>
+                                    <ComboBoxItem Content="シンバスタチン"/>
+                                    <ComboBoxItem Content="フルバスタチン"/>
+                                    <ComboBoxItem Content="アトルバスタチン"/>
+                                    <ComboBoxItem Content="ロスバスタチン"/>
+                                    <ComboBoxItem Content="ピタバスタチン"/>
+                                    <ComboBoxItem Content="ロバスタチン"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="StatinDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- スタチン 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="StatinName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="プラバスタチン"/>
+                                    <ComboBoxItem Content="シンバスタチン"/>
+                                    <ComboBoxItem Content="フルバスタチン"/>
+                                    <ComboBoxItem Content="アトルバスタチン"/>
+                                    <ComboBoxItem Content="ロスバスタチン"/>
+                                    <ComboBoxItem Content="ピタバスタチン"/>
+                                    <ComboBoxItem Content="ロバスタチン"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="StatinDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- SGLT2i -->
+                        <GroupBox Header="SGLT2i" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- SGLT2i使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="SGLT2iComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- SGLT2i 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="SGLT2iName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="ダパグリフロジン"/>
+                                    <ComboBoxItem Content="エンパグリフロジン"/>
+                                    <ComboBoxItem Content="カナグリフロジン"/>
+                                    <ComboBoxItem Content="イプラグリフロジン"/>
+                                    <ComboBoxItem Content="ルセオグリフロジン"/>
+                                    <ComboBoxItem Content="トホグリフロジン"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="SGLT2iDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- SGLT2i 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="SGLT2iName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="ダパグリフロジン"/>
+                                    <ComboBoxItem Content="エンパグリフロジン"/>
+                                    <ComboBoxItem Content="カナグリフロジン"/>
+                                    <ComboBoxItem Content="イプラグリフロジン"/>
+                                    <ComboBoxItem Content="ルセオグリフロジン"/>
+                                    <ComboBoxItem Content="トホグリフロジン"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="SGLT2iDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- SGLT2i 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="SGLT2iName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="ダパグリフロジン"/>
+                                    <ComboBoxItem Content="エンパグリフロジン"/>
+                                    <ComboBoxItem Content="カナグリフロジン"/>
+                                    <ComboBoxItem Content="イプラグリフロジン"/>
+                                    <ComboBoxItem Content="ルセオグリフロジン"/>
+                                    <ComboBoxItem Content="トホグリフロジン"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="SGLT2iDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- ACE/ARB/ARNi -->
+                        <GroupBox Header="ACE/ARB/ARNi" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- RAAS使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="RAASComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- RAAS 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RAASName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="RAASDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- RAAS 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RAASName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="RAASDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- RAAS 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="RAASName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="RAASDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- MRA -->
+                        <GroupBox Header="MRA" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- MRA使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="MRAComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- MRA 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="MRAName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="スピロノラクトン"/>
+                                    <ComboBoxItem Content="エプレレノン"/>
+                                    <ComboBoxItem Content="フィネレノン"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="MRADose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- MRA 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="MRAName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="スピロノラクトン"/>
+                                    <ComboBoxItem Content="エプレレノン"/>
+                                    <ComboBoxItem Content="フィネレノン"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="MRADose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- MRA 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="MRAName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="スピロノラクトン"/>
+                                    <ComboBoxItem Content="エプレレノン"/>
+                                    <ComboBoxItem Content="フィネレノン"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="MRADose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- 利尿薬 -->
+                        <GroupBox Header="利尿薬" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- 利尿薬使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="DiureticsComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- 利尿薬 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="DiureticsName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="フロセミド"/>
+                                    <ComboBoxItem Content="トラセミド"/>
+                                    <ComboBoxItem Content="トリクロルメチアジド"/>
+                                    <ComboBoxItem Content="インダパミド"/>
+                                    <ComboBoxItem Content="トルバプタン"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="DiureticsDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- 利尿薬 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="DiureticsName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="フロセミド"/>
+                                    <ComboBoxItem Content="トラセミド"/>
+                                    <ComboBoxItem Content="トリクロルメチアジド"/>
+                                    <ComboBoxItem Content="インダパミド"/>
+                                    <ComboBoxItem Content="トルバプタン"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="DiureticsDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- 利尿薬 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="DiureticsName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="フロセミド"/>
+                                    <ComboBoxItem Content="トラセミド"/>
+                                    <ComboBoxItem Content="トリクロルメチアジド"/>
+                                    <ComboBoxItem Content="インダパミド"/>
+                                    <ComboBoxItem Content="トルバプタン"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="DiureticsDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- 抗血小板薬 -->
+                        <GroupBox Header="抗血小板薬" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- 抗血小板薬使用有無 -->
+                                <Label Grid.Row="0" Grid.Column="0" Content="使用:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AntiplateletAgentComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="あり"/>
+                                    <ComboBoxItem Content="なし"/>
+                                </ComboBox>
+
+                                <!-- 抗血小板薬 1行目 -->
+                                <Label Grid.Row="1" Grid.Column="0" Content="薬剤名1:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="AntiplateletAgentName1ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="アスピリン"/>
+                                    <ComboBoxItem Content="シロスタゾール"/>
+                                    <ComboBoxItem Content="クロピドグレル"/>
+                                    <ComboBoxItem Content="プラスグレル"/>
+                                </ComboBox>
+                                <Label Grid.Row="1" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="3" x:Name="AntiplateletAgentDose1TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- 抗血小板薬 2行目 -->
+                                <Label Grid.Row="2" Grid.Column="0" Content="薬剤名2:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="AntiplateletAgentName2ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="アスピリン"/>
+                                    <ComboBoxItem Content="シロスタゾール"/>
+                                    <ComboBoxItem Content="クロピドグレル"/>
+                                    <ComboBoxItem Content="プラスグレル"/>
+                                </ComboBox>
+                                <Label Grid.Row="2" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="3" x:Name="AntiplateletAgentDose2TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+
+                                <!-- 抗血小板薬 3行目 -->
+                                <Label Grid.Row="3" Grid.Column="0" Content="薬剤名3:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="AntiplateletAgentName3ComboBox" Style="{StaticResource MedicationComboBoxStyle}" SelectionChanged="UpdateMedicationSummary">
+                                    <ComboBoxItem Content=""/>
+                                    <ComboBoxItem Content="アスピリン"/>
+                                    <ComboBoxItem Content="シロスタゾール"/>
+                                    <ComboBoxItem Content="クロピドグレル"/>
+                                    <ComboBoxItem Content="プラスグレル"/>
+                                </ComboBox>
+                                <Label Grid.Row="3" Grid.Column="2" Content="用量(mg):" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="3" x:Name="AntiplateletAgentDose3TextBox" Style="{StaticResource MedicationTextBoxStyle}" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <!-- その他の薬剤 -->
+                        <GroupBox Header="その他の薬剤" Style="{StaticResource MedicationGroupStyle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Content="その他:" Style="{StaticResource MedicationLabelStyle}"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="OtherMedicationsTextBox" TextWrapping="Wrap" AcceptsReturn="True" Height="60" TextChanged="UpdateMedicationSummary"/>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </GroupBox>
+            </DockPanel>
+
+            <!-- 薬物療法要約 -->
+            <GroupBox Grid.Row="1" Header="薬物療法要約" Margin="5">
+                <TextBlock x:Name="MedicationSummaryTextBlock" TextWrapping="Wrap" Margin="5" Height="120"/>
+            </GroupBox>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

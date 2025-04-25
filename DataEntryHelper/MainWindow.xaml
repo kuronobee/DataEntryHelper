@@ -59,6 +59,11 @@
             <TabItem Header="心電図・レントゲン">
                 <controls:EcgXrayControl x:Name="EcgXrayCtrl"/>
             </TabItem>
+
+            <!-- 薬物療法タブ -->
+            <TabItem Header="薬物療法">
+                <controls:MedicationControl x:Name="MedicationCtrl"/>
+            </TabItem>
         </TabControl>
 
         <!-- 保存ボタン -->

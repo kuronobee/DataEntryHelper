@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.IO;
 using System.Text.Json;
@@ -164,6 +165,112 @@ namespace DataEntryHelper
                     patientData.XP_Summary = ecgXrayData.XP_Summary;
                 }
 
+                // 薬物療法データを取得して結合
+                if (MedicationCtrl != null)
+                {
+                    MedicationData medData = MedicationCtrl.GetMedicationData();
+
+                    // βブロッカー
+                    patientData.BetaBlocker = medData.BetaBlocker;
+                    patientData.BetaBlockerName1 = medData.BetaBlockerName1;
+                    patientData.BetaBlockerDose1 = medData.BetaBlockerDose1;
+                    patientData.BetaBlockerName2 = medData.BetaBlockerName2;
+                    patientData.BetaBlockerDose2 = medData.BetaBlockerDose2;
+                    patientData.BetaBlockerName3 = medData.BetaBlockerName3;
+                    patientData.BetaBlockerDose3 = medData.BetaBlockerDose3;
+
+                    // CCB
+                    patientData.CCB = medData.CCB;
+                    patientData.CCBName1 = medData.CCBName1;
+                    patientData.CCBDose1 = medData.CCBDose1;
+                    patientData.CCBName2 = medData.CCBName2;
+                    patientData.CCBDose2 = medData.CCBDose2;
+                    patientData.CCBName3 = medData.CCBName3;
+                    patientData.CCBDose3 = medData.CCBDose3;
+
+                    // 抗不整脈薬
+                    patientData.AntiArrhythmicDrug = medData.AntiArrhythmicDrug;
+                    patientData.AntiArrhythmicDrugName1 = medData.AntiArrhythmicDrugName1;
+                    patientData.AntiArrhythmicDrugDose1 = medData.AntiArrhythmicDrugDose1;
+                    patientData.AntiArrhythmicDrugName2 = medData.AntiArrhythmicDrugName2;
+                    patientData.AntiArrhythmicDrugDose2 = medData.AntiArrhythmicDrugDose2;
+                    patientData.AntiArrhythmicDrugName3 = medData.AntiArrhythmicDrugName3;
+                    patientData.AntiArrhythmicDrugDose3 = medData.AntiArrhythmicDrugDose3;
+
+                    // DOAC
+                    patientData.DOAC = medData.DOAC;
+                    patientData.DOACName1 = medData.DOACName1;
+                    patientData.DOACDose1 = medData.DOACDose1;
+                    patientData.DOACName2 = medData.DOACName2;
+                    patientData.DOACDose2 = medData.DOACDose2;
+                    patientData.DOACName3 = medData.DOACName3;
+                    patientData.DOACDose3 = medData.DOACDose3;
+
+                    // VKA
+                    patientData.VKA = medData.VKA;
+                    patientData.VKADose = medData.VKADose;
+
+                    // スタチン
+                    patientData.Statin = medData.Statin;
+                    patientData.StatinName1 = medData.StatinName1;
+                    patientData.StatinDose1 = medData.StatinDose1;
+                    patientData.StatinName2 = medData.StatinName2;
+                    patientData.StatinDose2 = medData.StatinDose2;
+                    patientData.StatinName3 = medData.StatinName3;
+                    patientData.StatinDose3 = medData.StatinDose3;
+
+                    // SGLT2i
+                    patientData.SGLT2i = medData.SGLT2i;
+                    patientData.SGLT2iName1 = medData.SGLT2iName1;
+                    patientData.SGLT2iDose1 = medData.SGLT2iDose1;
+                    patientData.SGLT2iName2 = medData.SGLT2iName2;
+                    patientData.SGLT2iDose2 = medData.SGLT2iDose2;
+                    patientData.SGLT2iName3 = medData.SGLT2iName3;
+                    patientData.SGLT2iDose3 = medData.SGLT2iDose3;
+
+                    // ACE/ARB/ARNi
+                    patientData.RAAS = medData.RAAS;
+                    patientData.RAASName1 = medData.RAASName1;
+                    patientData.RAASDose1 = medData.RAASDose1;
+                    patientData.RAASName2 = medData.RAASName2;
+                    patientData.RAASDose2 = medData.RAASDose2;
+                    patientData.RAASName3 = medData.RAASName3;
+                    patientData.RAASDose3 = medData.RAASDose3;
+
+                    // MRA
+                    patientData.MRA = medData.MRA;
+                    patientData.MRAName1 = medData.MRAName1;
+                    patientData.MRADose1 = medData.MRADose1;
+                    patientData.MRAName2 = medData.MRAName2;
+                    patientData.MRADose2 = medData.MRADose2;
+                    patientData.MRAName3 = medData.MRAName3;
+                    patientData.MRADose3 = medData.MRADose3;
+
+                    // 利尿薬
+                    patientData.Diuretics = medData.Diuretics;
+                    patientData.DiureticsName1 = medData.DiureticsName1;
+                    patientData.DiureticsDose1 = medData.DiureticsDose1;
+                    patientData.DiureticsName2 = medData.DiureticsName2;
+                    patientData.DiureticsDose2 = medData.DiureticsDose2;
+                    patientData.DiureticsName3 = medData.DiureticsName3;
+                    patientData.DiureticsDose3 = medData.DiureticsDose3;
+
+                    // 抗血小板薬
+                    patientData.AntiplateletAgent = medData.AntiplateletAgent;
+                    patientData.AntiplateletAgentName1 = medData.AntiplateletAgentName1;
+                    patientData.AntiplateletAgentDose1 = medData.AntiplateletAgentDose1;
+                    patientData.AntiplateletAgentName2 = medData.AntiplateletAgentName2;
+                    patientData.AntiplateletAgentDose2 = medData.AntiplateletAgentDose2;
+                    patientData.AntiplateletAgentName3 = medData.AntiplateletAgentName3;
+                    patientData.AntiplateletAgentDose3 = medData.AntiplateletAgentDose3;
+
+                    // その他の薬剤
+                    patientData.OtherMedications = medData.OtherMedications;
+
+                    // 薬物療法要約
+                    patientData.MedicationSummary = medData.MedicationSummary;
+                }
+
                 // ディレクトリがなければ作成
                 string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PatientData");
                 Directory.CreateDirectory(directoryPath);
@@ -205,6 +312,11 @@ namespace DataEntryHelper
             if (EcgXrayCtrl != null)
             {
                 EcgXrayCtrl.ClearData();
+            }
+
+            if (MedicationCtrl != null)
+            {
+                MedicationCtrl.ClearData();
             }
 
             // 患者データタブに戻る
