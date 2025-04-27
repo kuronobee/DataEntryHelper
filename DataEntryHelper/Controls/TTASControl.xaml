@@ -1,0 +1,59 @@
+﻿<!-- TTASControl.xaml -->
+<UserControl x:Class="DataEntryHelper.Controls.TTASControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataEntryHelper.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+            <GroupBox Header="T-TAS（Total Thrombus-formation Analysis System）">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0 - T-TAS測定値 -->
+                    <Label Grid.Row="0" Grid.Column="0" Content="T-TAS PL (AUC10):"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="TTASPLTextBox" TextChanged="TextBox_TextChanged"/>
+
+                    <Label Grid.Row="0" Grid.Column="2" Content="T-TAS AR (AUC30):"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" x:Name="TTASARTextBox" TextChanged="TextBox_TextChanged"/>
+
+                    <!-- Row 1 - PL正常範囲 -->
+                    <Label Grid.Row="1" Grid.Column="0" Content="PL正常範囲:"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="71.5-137.9" Margin="5"/>
+
+                    <!-- Row 2 - AR正常範囲 -->
+                    <Label Grid.Row="2" Grid.Column="0" Content="AR正常範囲:"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="1550-1810" Margin="5"/>
+
+                    <!-- Row 3 - 参考情報 -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="5,15,5,5" TextWrapping="Wrap">
+                        ※PL: 血小板血栓形成能, AR: 血小板・凝固血栓形成能
+                        <LineBreak/>
+                        低値: 抗血小板薬・抗凝固薬の効果大、出血リスク増加
+                        <LineBreak/>
+                        高値: 血栓形成能亢進、血栓リスク増加
+                    </TextBlock>
+                </Grid>
+            </GroupBox>
+
+            <!-- T-TAS結果要約 -->
+            <GroupBox Header="T-TAS結果評価" Margin="0,10,0,0">
+                <TextBlock x:Name="TTASSummaryTextBlock" TextWrapping="Wrap" MinHeight="100" Margin="5"/>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

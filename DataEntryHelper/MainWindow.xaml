@@ -69,6 +69,14 @@
             <TabItem Header="アブレーション">
                 <controls:AblationControl x:Name="AblationCtrl"/>
             </TabItem>
+            <!-- サンプリングタブ (新規追加) -->
+            <TabItem Header="サンプリング">
+                <controls:SamplingControl x:Name="SamplingCtrl"/>
+            </TabItem>
+            <!-- T-TASタブ (新規追加) -->
+            <TabItem Header="T-TAS">
+                <controls:TTASControl x:Name="TTASCtrl"/>
+            </TabItem>
         </TabControl>
 
         <!-- 保存ボタン -->

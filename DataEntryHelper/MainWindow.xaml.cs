@@ -35,6 +35,21 @@ namespace DataEntryHelper
                     // 心エコータブが選択された場合に心不全情報を更新
                     UpdateEchocardiogramHeartFailureStatus();
                 }
+                else if (tabHeader == "サンプリング")
+                {
+                    // サンプリングタブが選択された場合にBSA情報を渡す
+                    UpdateSamplingBSA();
+                }
+            }
+        }
+        private void UpdateSamplingBSA()
+        {
+            if (SamplingCtrl != null && PatientDataCtrl != null)
+            {
+                // 患者データから体表面積を取得
+                PatientData patientData = PatientDataCtrl.GetPatientData();
+                // BSA情報をサンプリングコントロールに渡す
+                SamplingCtrl.SetBSA(patientData.BSA);
             }
         }
 
@@ -296,7 +311,44 @@ namespace DataEntryHelper
                     patientData.MaxVoltageMean = ablationData.MaxVoltageMean;
                     patientData.AblationSummary = ablationData.AblationSummary;
                 }
-
+                // サンプリングデータを取得して結合
+                if (SamplingCtrl != null)
+                {
+                    SamplingData samplingData = SamplingCtrl.GetSamplingData();
+                    patientData.LATotalADM = samplingData.LATotalADM;
+                    patientData.LAMatureADM = samplingData.LAMatureADM;
+                    patientData.LAATX = samplingData.LAATX;
+                    patientData.LAMTADMRatio = samplingData.LAMTADMRatio;
+                    patientData.CSTotalADM = samplingData.CSTotalADM;
+                    patientData.CSMatureADM = samplingData.CSMatureADM;
+                    patientData.CSATX = samplingData.CSATX;
+                    patientData.CSMTADMRatio = samplingData.CSMTADMRatio;
+                    patientData.FVTotalADM = samplingData.FVTotalADM;
+                    patientData.FVMatureADM = samplingData.FVMatureADM;
+                    patientData.FVATX = samplingData.FVATX;
+                    patientData.PATotalADM = samplingData.PATotalADM;
+                    patientData.PAMatureADM = samplingData.PAMatureADM;
+                    patientData.PAATX = samplingData.PAATX;
+                    patientData.DeltaTotalADM = samplingData.DeltaTotalADM;
+                    patientData.DeltaMatureADM = samplingData.DeltaMatureADM;
+                    patientData.DeltaATX = samplingData.DeltaATX;
+                    patientData.CSLADeltaTotalADM = samplingData.CSLADeltaTotalADM;
+                    patientData.CSLADeltaMatureADM = samplingData.CSLADeltaMatureADM;
+                    patientData.CSLADeltaATX = samplingData.CSLADeltaATX;
+                    patientData.DeltaTotalADMBSA = samplingData.DeltaTotalADMBSA;
+                    patientData.TotalADMBSA = samplingData.TotalADMBSA;
+                    patientData.DeltaTotalRatio = samplingData.DeltaTotalRatio;
+                    patientData.DeltaMatureRatio = samplingData.DeltaMatureRatio;
+                    patientData.SamplingSummary = samplingData.SamplingSummary;
+                }
+                // T-TASデータを取得して結合
+                if (TTASCtrl != null)
+                {
+                    TTASData ttasData = TTASCtrl.GetTTASData();
+                    patientData.TTASPL = ttasData.TTASPL;
+                    patientData.TTASAR = ttasData.TTASAR;
+                    patientData.TTASSummary = ttasData.TTASSummary;
+                }
                 // ディレクトリがなければ作成
                 string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PatientData");
                 Directory.CreateDirectory(directoryPath);
@@ -350,7 +402,16 @@ namespace DataEntryHelper
             {
                 AblationCtrl.ClearData();
             }
-
+            // サンプリングデータクリア
+            if (SamplingCtrl != null)
+            {
+                SamplingCtrl.ClearData();
+            }
+            // T-TASデータクリア
+            if (TTASCtrl != null)
+            {
+                TTASCtrl.ClearData();
+            }
             // 患者データタブに戻る
             MainTabControl.SelectedIndex = 0;
         }

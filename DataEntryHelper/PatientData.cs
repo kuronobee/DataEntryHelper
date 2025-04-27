@@ -912,5 +912,147 @@ namespace DataEntryHelper
         /// </summary>
         public string AblationSummary { get; set; } = "";
         #endregion
+        #region サンプリング情報
+        /// <summary>
+        /// LA-total ADM (pg/ml)
+        /// </summary>
+        public string LATotalADM { get; set; } = "";
+
+        /// <summary>
+        /// LA-mature ADM (pg/ml)
+        /// </summary>
+        public string LAMatureADM { get; set; } = "";
+
+        /// <summary>
+        /// LA-ATX (pg/L)
+        /// </summary>
+        public string LAATX { get; set; } = "";
+
+        /// <summary>
+        /// LA-m/t ADM比
+        /// </summary>
+        public string LAMTADMRatio { get; set; } = "";
+
+        /// <summary>
+        /// CS-total ADM (pg/ml)
+        /// </summary>
+        public string CSTotalADM { get; set; } = "";
+
+        /// <summary>
+        /// CS-mature ADM (pg/ml)
+        /// </summary>
+        public string CSMatureADM { get; set; } = "";
+
+        /// <summary>
+        /// CS-ATX (pg/L)
+        /// </summary>
+        public string CSATX { get; set; } = "";
+
+        /// <summary>
+        /// CS-m/t ADM比
+        /// </summary>
+        public string CSMTADMRatio { get; set; } = "";
+
+        /// <summary>
+        /// FV-total ADM (pg/ml)
+        /// </summary>
+        public string FVTotalADM { get; set; } = "";
+
+        /// <summary>
+        /// FV-mature ADM (pg/ml)
+        /// </summary>
+        public string FVMatureADM { get; set; } = "";
+
+        /// <summary>
+        /// FV-ATX (pg/L)
+        /// </summary>
+        public string FVATX { get; set; } = "";
+
+        /// <summary>
+        /// PA-total ADM (pg/ml)
+        /// </summary>
+        public string PATotalADM { get; set; } = "";
+
+        /// <summary>
+        /// PA-mature ADM (pg/ml)
+        /// </summary>
+        public string PAMatureADM { get; set; } = "";
+
+        /// <summary>
+        /// PA-ATX (pg/L)
+        /// </summary>
+        public string PAATX { get; set; } = "";
+
+        /// <summary>
+        /// Δt-ADM (CS-FV) (pg/ml)
+        /// </summary>
+        public string DeltaTotalADM { get; set; } = "";
+
+        /// <summary>
+        /// Δm-ADM (CS-FV) (pg/ml)
+        /// </summary>
+        public string DeltaMatureADM { get; set; } = "";
+
+        /// <summary>
+        /// ΔATX (CS-FV) (pg/L)
+        /// </summary>
+        public string DeltaATX { get; set; } = "";
+
+        /// <summary>
+        /// CS-LA Δt-ADM (pg/ml)
+        /// </summary>
+        public string CSLADeltaTotalADM { get; set; } = "";
+
+        /// <summary>
+        /// CS-LA Δm-ADM (pg/ml)
+        /// </summary>
+        public string CSLADeltaMatureADM { get; set; } = "";
+
+        /// <summary>
+        /// CS-LA ΔATX (pg/L)
+        /// </summary>
+        public string CSLADeltaATX { get; set; } = "";
+
+        /// <summary>
+        /// Δt ADM/BSA (pg/ml/m²)
+        /// </summary>
+        public string DeltaTotalADMBSA { get; set; } = "";
+
+        /// <summary>
+        /// t-ADM/BSA (pg/ml/m²)
+        /// </summary>
+        public string TotalADMBSA { get; set; } = "";
+
+        /// <summary>
+        /// Δt/t ADM比
+        /// </summary>
+        public string DeltaTotalRatio { get; set; } = "";
+
+        /// <summary>
+        /// Δm/m ADM比
+        /// </summary>
+        public string DeltaMatureRatio { get; set; } = "";
+
+        /// <summary>
+        /// サンプリング結果要約
+        /// </summary>
+        public string SamplingSummary { get; set; } = "";
+        #endregion
+        #region T-TAS情報
+        /// <summary>
+        /// T-TAS PL (AUC10)
+        /// </summary>
+        public string TTASPL { get; set; } = "";
+
+        /// <summary>
+        /// T-TAS AR (AUC30)
+        /// </summary>
+        public string TTASAR { get; set; } = "";
+
+        /// <summary>
+        /// T-TAS結果要約
+        /// </summary>
+        public string TTASSummary { get; set; } = "";
+        #endregion
     }
 }
