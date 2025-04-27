@@ -323,6 +323,56 @@ namespace DataEntryHelper.Controls
                 textBox.Foreground = System.Windows.Media.Brushes.Black;
             }
         }
+
+        /// <summary>
+        /// 血液検査データを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetBloodTestData(PatientData patientData)
+        {
+            // 蛋白・生化学
+            TpTextBox.Text = patientData.TP;
+            AlbTextBox.Text = patientData.Alb;
+
+            // 腎機能
+            BunTextBox.Text = patientData.BUN;
+            CreTextBox.Text = patientData.Cre;
+
+            // 炎症・筋逸脱
+            CrpTextBox.Text = patientData.CRP;
+            CkTextBox.Text = patientData.CK;
+
+            // 肝機能
+            AstTextBox.Text = patientData.AST;
+            AltTextBox.Text = patientData.ALT;
+
+            // 脂質
+            LdlTextBox.Text = patientData.LDL;
+            HdlTextBox.Text = patientData.HDL;
+            TgTextBox.Text = patientData.TG;
+
+            // 血糖
+            Hba1cTextBox.Text = patientData.HbA1c;
+            GluTextBox.Text = patientData.Glu;
+
+            // 血算
+            HbTextBox.Text = patientData.Hb;
+            WbcTextBox.Text = patientData.WBC;
+            PltTextBox.Text = patientData.Plt;
+
+            // 凝固
+            PtInrTextBox.Text = patientData.PTINR;
+            ApttTextBox.Text = patientData.APTT;
+
+            // その他
+            Fib4iTextBox.Text = patientData.Fib4i;
+            UaTextBox.Text = patientData.UA;
+            BnpTextBox.Text = patientData.BNP;
+
+            // TextChanged イベントを発生させて要約を更新
+            TextBox_TextChanged(null, null);
+        }
+
     }
 
     // 血液検査データクラス

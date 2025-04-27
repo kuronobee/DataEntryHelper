@@ -314,6 +314,104 @@ namespace DataEntryHelper.Controls
             EcgSummaryTextBlock.Text = string.Empty;
             XraySummaryTextBlock.Text = string.Empty;
         }
+
+        /// <summary>
+        /// 心電図・レントゲンデータを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetEcgXrayData(PatientData patientData)
+        {
+            // 心電図データ
+            HrTextBox.Text = patientData.ECG_HR;
+
+            // リズム
+            if (!string.IsNullOrEmpty(patientData.ECG_Rhythm))
+            {
+                foreach (ComboBoxItem item in RhythmComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.ECG_Rhythm)
+                    {
+                        RhythmComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // 電気軸
+            if (!string.IsNullOrEmpty(patientData.ECG_Axis))
+            {
+                foreach (ComboBoxItem item in AxisComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.ECG_Axis)
+                    {
+                        AxisComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // 伝導障害
+            if (!string.IsNullOrEmpty(patientData.ECG_ConductionDisturbance))
+            {
+                foreach (ComboBoxItem item in ConductionDisturbanceComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.ECG_ConductionDisturbance)
+                    {
+                        ConductionDisturbanceComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // ST-T変化
+            if (!string.IsNullOrEmpty(patientData.ECG_STTChange))
+            {
+                foreach (ComboBoxItem item in StTChangeComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.ECG_STTChange)
+                    {
+                        StTChangeComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            EcgCommentTextBox.Text = patientData.ECG_Comment;
+
+            // レントゲンデータ
+            CtrTextBox.Text = patientData.XP_CTR;
+
+            // Lung field
+            if (!string.IsNullOrEmpty(patientData.XP_LungField))
+            {
+                foreach (ComboBoxItem item in LungFieldComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.XP_LungField)
+                    {
+                        LungFieldComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // CP angle
+            if (!string.IsNullOrEmpty(patientData.XP_CPAngle))
+            {
+                foreach (ComboBoxItem item in CpAngleComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.XP_CPAngle)
+                    {
+                        CpAngleComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // 要約を更新
+            UpdateEcgSummary(null, null);
+            UpdateXraySummary(null, null);
+        }
+
     }
 
     // 心電図・レントゲンデータクラス

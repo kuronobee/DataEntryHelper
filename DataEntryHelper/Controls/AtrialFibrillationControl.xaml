@@ -26,6 +26,7 @@
                     <!-- Row 0 -->
                     <Label Grid.Row="0" Grid.Column="0" Content="心房細動タイプ:"/>
                     <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AtrialFibrillationTypeComboBox">
+                        <ComboBoxItem Content=""/>
                         <ComboBoxItem Content="paroxysmal"/>
                         <ComboBoxItem Content="persistent"/>
                         <ComboBoxItem Content="chronic"/>

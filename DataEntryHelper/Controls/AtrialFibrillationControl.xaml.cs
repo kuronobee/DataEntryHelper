@@ -179,6 +179,33 @@ namespace DataEntryHelper.Controls
             // ComboBoxを初期値にリセット
             InitializeComboBoxes();
         }
+
+        /// <summary>
+        /// 心房細動データを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetAtrialFibrillationData(PatientData patientData)
+        {
+            // 心房細動タイプ
+            if (patientData.AtrialFibrillationType == "paroxysmal")
+                AtrialFibrillationTypeComboBox.SelectedIndex = 0;
+            else if (patientData.AtrialFibrillationType == "persistent")
+                AtrialFibrillationTypeComboBox.SelectedIndex = 1;
+            else if (patientData.AtrialFibrillationType == "chronic")
+                AtrialFibrillationTypeComboBox.SelectedIndex = 2;
+            else
+                AtrialFibrillationTypeComboBox.SelectedIndex = 0;
+
+            // 心房細動の症状
+            if (patientData.AtrialFibrillationSymptoms == "あり")
+                AtrialFibrillationSymptomsComboBox.SelectedIndex = 1;
+            else if (patientData.AtrialFibrillationSymptoms == "なし")
+                AtrialFibrillationSymptomsComboBox.SelectedIndex = 2;
+            else
+                AtrialFibrillationSymptomsComboBox.SelectedIndex = 0;
+
+            // スコアは計算値のため設定不要
+        }
     }
 
     // 心房細動データクラス

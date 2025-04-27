@@ -622,6 +622,151 @@ namespace DataEntryHelper.Controls
             // 薬物療法要約
             MedicationSummaryTextBlock.Text = string.Empty;
         }
+
+        /// <summary>
+        /// 薬物療法データを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetMedicationData(PatientData patientData)
+        {
+            // βブロッカー
+            SetYesNoComboBox(BetaBlockerComboBox, patientData.BetaBlocker);
+            SetComboBoxText(BetaBlockerName1ComboBox, patientData.BetaBlockerName1);
+            BetaBlockerDose1TextBox.Text = patientData.BetaBlockerDose1;
+            SetComboBoxText(BetaBlockerName2ComboBox, patientData.BetaBlockerName2);
+            BetaBlockerDose2TextBox.Text = patientData.BetaBlockerDose2;
+            SetComboBoxText(BetaBlockerName3ComboBox, patientData.BetaBlockerName3);
+            BetaBlockerDose3TextBox.Text = patientData.BetaBlockerDose3;
+
+            // CCB
+            SetYesNoComboBox(CCBComboBox, patientData.CCB);
+            SetComboBoxText(CCBName1ComboBox, patientData.CCBName1);
+            CCBDose1TextBox.Text = patientData.CCBDose1;
+            SetComboBoxText(CCBName2ComboBox, patientData.CCBName2);
+            CCBDose2TextBox.Text = patientData.CCBDose2;
+            SetComboBoxText(CCBName3ComboBox, patientData.CCBName3);
+            CCBDose3TextBox.Text = patientData.CCBDose3;
+
+            // 抗不整脈薬
+            SetYesNoComboBox(AntiArrhythmicDrugComboBox, patientData.AntiArrhythmicDrug);
+            SetComboBoxText(AntiArrhythmicDrugName1ComboBox, patientData.AntiArrhythmicDrugName1);
+            AntiArrhythmicDrugDose1TextBox.Text = patientData.AntiArrhythmicDrugDose1;
+            SetComboBoxText(AntiArrhythmicDrugName2ComboBox, patientData.AntiArrhythmicDrugName2);
+            AntiArrhythmicDrugDose2TextBox.Text = patientData.AntiArrhythmicDrugDose2;
+            SetComboBoxText(AntiArrhythmicDrugName3ComboBox, patientData.AntiArrhythmicDrugName3);
+            AntiArrhythmicDrugDose3TextBox.Text = patientData.AntiArrhythmicDrugDose3;
+
+            // DOAC
+            SetYesNoComboBox(DOACComboBox, patientData.DOAC);
+            SetComboBoxText(DOACName1ComboBox, patientData.DOACName1);
+            DOACDose1TextBox.Text = patientData.DOACDose1;
+            SetComboBoxText(DOACName2ComboBox, patientData.DOACName2);
+            DOACDose2TextBox.Text = patientData.DOACDose2;
+            SetComboBoxText(DOACName3ComboBox, patientData.DOACName3);
+            DOACDose3TextBox.Text = patientData.DOACDose3;
+
+            // VKA
+            SetYesNoComboBox(VKAComboBox, patientData.VKA);
+            VKADoseTextBox.Text = patientData.VKADose;
+
+            // スタチン
+            SetYesNoComboBox(StatinComboBox, patientData.Statin);
+            SetComboBoxText(StatinName1ComboBox, patientData.StatinName1);
+            StatinDose1TextBox.Text = patientData.StatinDose1;
+            SetComboBoxText(StatinName2ComboBox, patientData.StatinName2);
+            StatinDose2TextBox.Text = patientData.StatinDose2;
+            SetComboBoxText(StatinName3ComboBox, patientData.StatinName3);
+            StatinDose3TextBox.Text = patientData.StatinDose3;
+
+            // SGLT2i
+            SetYesNoComboBox(SGLT2iComboBox, patientData.SGLT2i);
+            SetComboBoxText(SGLT2iName1ComboBox, patientData.SGLT2iName1);
+            SGLT2iDose1TextBox.Text = patientData.SGLT2iDose1;
+            SetComboBoxText(SGLT2iName2ComboBox, patientData.SGLT2iName2);
+            SGLT2iDose2TextBox.Text = patientData.SGLT2iDose2;
+            SetComboBoxText(SGLT2iName3ComboBox, patientData.SGLT2iName3);
+            SGLT2iDose3TextBox.Text = patientData.SGLT2iDose3;
+
+            // ACE/ARB/ARNi
+            SetYesNoComboBox(RAASComboBox, patientData.RAAS);
+            SetComboBoxText(RAASName1ComboBox, patientData.RAASName1);
+            RAASDose1TextBox.Text = patientData.RAASDose1;
+            SetComboBoxText(RAASName2ComboBox, patientData.RAASName2);
+            RAASDose2TextBox.Text = patientData.RAASDose2;
+            SetComboBoxText(RAASName3ComboBox, patientData.RAASName3);
+            RAASDose3TextBox.Text = patientData.RAASDose3;
+
+            // MRA
+            SetYesNoComboBox(MRAComboBox, patientData.MRA);
+            SetComboBoxText(MRAName1ComboBox, patientData.MRAName1);
+            MRADose1TextBox.Text = patientData.MRADose1;
+            SetComboBoxText(MRAName2ComboBox, patientData.MRAName2);
+            MRADose2TextBox.Text = patientData.MRADose2;
+            SetComboBoxText(MRAName3ComboBox, patientData.MRAName3);
+            MRADose3TextBox.Text = patientData.MRADose3;
+
+            // 利尿薬
+            SetYesNoComboBox(DiureticsComboBox, patientData.Diuretics);
+            SetComboBoxText(DiureticsName1ComboBox, patientData.DiureticsName1);
+            DiureticsDose1TextBox.Text = patientData.DiureticsDose1;
+            SetComboBoxText(DiureticsName2ComboBox, patientData.DiureticsName2);
+            DiureticsDose2TextBox.Text = patientData.DiureticsDose2;
+            SetComboBoxText(DiureticsName3ComboBox, patientData.DiureticsName3);
+            DiureticsDose3TextBox.Text = patientData.DiureticsDose3;
+
+            // 抗血小板薬
+            SetYesNoComboBox(AntiplateletAgentComboBox, patientData.AntiplateletAgent);
+            SetComboBoxText(AntiplateletAgentName1ComboBox, patientData.AntiplateletAgentName1);
+            AntiplateletAgentDose1TextBox.Text = patientData.AntiplateletAgentDose1;
+            SetComboBoxText(AntiplateletAgentName2ComboBox, patientData.AntiplateletAgentName2);
+            AntiplateletAgentDose2TextBox.Text = patientData.AntiplateletAgentDose2;
+            SetComboBoxText(AntiplateletAgentName3ComboBox, patientData.AntiplateletAgentName3);
+            AntiplateletAgentDose3TextBox.Text = patientData.AntiplateletAgentDose3;
+
+            // その他の薬剤
+            OtherMedicationsTextBox.Text = patientData.OtherMedications;
+
+            // 薬物療法要約を更新
+            UpdateMedicationSummary(null, null);
+        }
+
+        /// <summary>
+        /// あり/なしコンボボックスの値を設定
+        /// </summary>
+        private void SetYesNoComboBox(ComboBox comboBox, string value)
+        {
+            if (value == "あり")
+                comboBox.SelectedIndex = 0;
+            else if (value == "なし")
+                comboBox.SelectedIndex = 1;
+            else
+                comboBox.SelectedIndex = -1; // 未選択
+        }
+
+        /// <summary>
+        /// コンボボックスにテキスト値を設定
+        /// </summary>
+        private void SetComboBoxText(ComboBox comboBox, string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                comboBox.SelectedIndex = -1;
+                return;
+            }
+
+            // アイテムから一致するものを探す
+            foreach (ComboBoxItem item in comboBox.Items)
+            {
+                if (item.Content.ToString() == value)
+                {
+                    comboBox.SelectedItem = item;
+                    return;
+                }
+            }
+
+            // 一致するアイテムがなければテキストを直接設定
+            comboBox.Text = value;
+        }
     }
 
     // 薬物療法データクラス

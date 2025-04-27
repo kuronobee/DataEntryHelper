@@ -146,5 +146,86 @@ namespace DataEntryHelper.Controls
             // IDフィールドにフォーカスを設定
             IdTextBox.Focus();
         }
+
+        /// <summary>
+        /// 患者データを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetPatientData(PatientData patientData)
+        {
+            // テキストボックス・コンボボックスに値を設定
+            IdTextBox.Text = patientData.Id;
+
+            // 性別
+            if (patientData.Gender == "男性")
+                GenderComboBox.SelectedIndex = 0;
+            else if (patientData.Gender == "女性")
+                GenderComboBox.SelectedIndex = 1;
+            else
+                GenderComboBox.SelectedIndex = 0;
+
+            // 基本情報
+            AgeTextBox.Text = patientData.Age;
+            HeightTextBox.Text = patientData.Height;
+            WeightTextBox.Text = patientData.Weight;
+            // BSA、BMIは計算値なので設定不要
+
+            // バイタル
+            SystolicBpTextBox.Text = patientData.SystolicBP;
+            DiastolicBpTextBox.Text = patientData.DiastolicBP;
+            HeartRateTextBox.Text = patientData.HeartRate;
+
+            // リズム
+            if (patientData.Rhythm == "整")
+                RhythmComboBox.SelectedIndex = 0;
+            else if (patientData.Rhythm == "不整")
+                RhythmComboBox.SelectedIndex = 1;
+            else
+                RhythmComboBox.SelectedIndex = 0;
+
+            // 生活歴
+            AlcoholTextBox.Text = patientData.Alcohol;
+
+            // 喫煙歴
+            if (patientData.Smoking == "current")
+                SmokingComboBox.SelectedIndex = 0;
+            else if (patientData.Smoking == "past")
+                SmokingComboBox.SelectedIndex = 1;
+            else if (patientData.Smoking == "none")
+                SmokingComboBox.SelectedIndex = 2;
+            else
+                SmokingComboBox.SelectedIndex = 2;
+
+            // 疾患（あり/なしのコンボボックス）
+            SetYesNoComboBox(HypertensionComboBox, patientData.Hypertension);
+            SetYesNoComboBox(DiabetesComboBox, patientData.Diabetes);
+            SetYesNoComboBox(DyslipidemiaComboBox, patientData.Dyslipidemia);
+            SetYesNoComboBox(CkdComboBox, patientData.CKD);
+            SetYesNoComboBox(StrokeComboBox, patientData.Stroke);
+            SetYesNoComboBox(HeartFailureComboBox, patientData.HeartFailure);
+            SetYesNoComboBox(VascularDiseaseComboBox, patientData.VascularDisease);
+            SetYesNoComboBox(CoronaryIschemiaComboBox, patientData.CoronaryIschemia);
+            SetYesNoComboBox(CardiomyopathyComboBox, patientData.Cardiomyopathy);
+            SetYesNoComboBox(DementiaComboBox, patientData.Dementia);
+
+            // その他
+            OthersTextBox.Text = patientData.Others;
+
+            // 計算フィールドを更新
+            CalculateFields(null, null);
+        }
+
+        /// <summary>
+        /// あり/なしコンボボックスの値を設定
+        /// </summary>
+        private void SetYesNoComboBox(ComboBox comboBox, string value)
+        {
+            if (value == "あり")
+                comboBox.SelectedIndex = 0;
+            else if (value == "なし")
+                comboBox.SelectedIndex = 1;
+            else
+                comboBox.SelectedIndex = 1; // デフォルトは「なし」
+        }
     }
 }

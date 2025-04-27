@@ -149,6 +149,23 @@ namespace DataEntryHelper.Controls
             // 要約をクリア
             TTASSummaryTextBlock.Text = string.Empty;
         }
+
+        /// <summary>
+        /// T-TASデータを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetTTASData(PatientData patientData)
+        {
+            // T-TAS PL
+            TTASPLTextBox.Text = patientData.TTASPL;
+
+            // T-TAS AR
+            TTASARTextBox.Text = patientData.TTASAR;
+
+            // TextChanged イベントを発生させて要約を更新
+            TextBox_TextChanged(null, null);
+        }
+
     }
 
     // T-TASデータクラス

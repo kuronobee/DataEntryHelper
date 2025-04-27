@@ -373,6 +373,56 @@ namespace DataEntryHelper.Controls
             // ComboBoxを初期値にリセット
             InitializeComboBoxes();
         }
+
+        /// <summary>
+        /// 心エコーデータを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetEchocardiogramData(PatientData patientData)
+        {
+            // 左室パラメータ
+            IvsdTextBox.Text = patientData.IVSd;
+            LvpwdTextBox.Text = patientData.LVPWd;
+            LvddTextBox.Text = patientData.LVDd;
+            LvdsTextBox.Text = patientData.LVDs;
+            EdvTextBox.Text = patientData.EDV;
+            EsvTextBox.Text = patientData.ESV;
+
+            // 左房パラメータ
+            LadTextBox.Text = patientData.LAD;
+            LavTextBox.Text = patientData.LAV;
+
+            // 収縮機能
+            LvefTextBox.Text = patientData.LVEF;
+            // HeartFailureTypeは計算値
+
+            // 壁運動異常
+            if (patientData.FocalAsynergy == "あり")
+                FocalAsynergyComboBox.SelectedIndex = 0;
+            else if (patientData.FocalAsynergy == "なし")
+                FocalAsynergyComboBox.SelectedIndex = 1;
+
+            // 弁膜症
+            if (patientData.VHD == "あり")
+                VhdComboBox.SelectedIndex = 0;
+            else if (patientData.VHD == "なし")
+                VhdComboBox.SelectedIndex = 1;
+
+            // 拡張能
+            EWaveTextBox.Text = patientData.EWave;
+            AWaveTextBox.Text = patientData.AWave;
+            // E/A比は計算値
+            EPrimeSeptTextBox.Text = patientData.EPrimeSept;
+            // E/e'比は計算値
+
+            // 右心系
+            TrPgTextBox.Text = patientData.TRPG;
+            IvcInspTextBox.Text = patientData.IVCInsp;
+            IvcExpTextBox.Text = patientData.IVCExp;
+
+            // その他の所見
+            OtherDisorderTextBox.Text = patientData.OtherDisorder;
+        }
     }
 
     // 心エコーデータクラス

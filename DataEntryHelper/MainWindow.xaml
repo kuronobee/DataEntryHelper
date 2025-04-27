@@ -1,4 +1,4 @@
-﻿<!-- MainWindow.xaml (修正版) -->
+﻿<!-- MainWindow.xaml (メニューバー追加) -->
 <Window x:Class="DataEntryHelper.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -29,12 +29,22 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- メニューバー -->
+        <Menu Grid.Row="0">
+            <MenuItem Header="ファイル">
+                <MenuItem Header="患者リスト" Click="PatientListMenu_Click"/>
+                <Separator/>
+                <MenuItem Header="終了" Click="ExitMenu_Click"/>
+            </MenuItem>
+        </Menu>
+
         <!-- タブコントロール -->
-        <TabControl x:Name="MainTabControl" Grid.Row="0" SelectionChanged="MainTabControl_SelectionChanged">
+        <TabControl x:Name="MainTabControl" Grid.Row="1" SelectionChanged="MainTabControl_SelectionChanged">
             <!-- 患者データ入力タブ -->
             <TabItem Header="患者データ入力">
                 <controls:PatientDataControl x:Name="PatientDataCtrl" RiskFactorsChanged="PatientDataCtrl_RiskFactorsChanged"/>
@@ -65,22 +75,24 @@
                 <controls:MedicationControl x:Name="MedicationCtrl"/>
             </TabItem>
 
-            <!-- アブレーションタブ (新規追加) -->
+            <!-- アブレーションタブ -->
             <TabItem Header="アブレーション">
                 <controls:AblationControl x:Name="AblationCtrl"/>
             </TabItem>
-            <!-- サンプリングタブ (新規追加) -->
+
+            <!-- サンプリングタブ -->
             <TabItem Header="サンプリング">
                 <controls:SamplingControl x:Name="SamplingCtrl"/>
             </TabItem>
-            <!-- T-TASタブ (新規追加) -->
+
+            <!-- T-TASタブ -->
             <TabItem Header="T-TAS">
                 <controls:TTASControl x:Name="TTASCtrl"/>
             </TabItem>
         </TabControl>
 
         <!-- 保存ボタン -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
             <Button x:Name="SaveButton" Content="保存" Width="100" Height="30" Margin="5" Click="SaveButton_Click"/>
             <Button x:Name="ClearButton" Content="クリア" Width="100" Height="30" Margin="5" Click="ClearButton_Click"/>
         </StackPanel>

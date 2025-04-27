@@ -416,6 +416,41 @@ namespace DataEntryHelper.Controls
             // 要約
             SamplingSummaryTextBlock.Text = string.Empty;
         }
+
+        /// <summary>
+        /// サンプリングデータを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetSamplingData(PatientData patientData)
+        {
+            // LA (左房)
+            LATotalAdmTextBox.Text = patientData.LATotalADM;
+            LAMatureAdmTextBox.Text = patientData.LAMatureADM;
+            LAAtxTextBox.Text = patientData.LAATX;
+            // LAMTADMRatio は計算値
+
+            // CS (冠静脈洞)
+            CSTotalAdmTextBox.Text = patientData.CSTotalADM;
+            CSMatureAdmTextBox.Text = patientData.CSMatureADM;
+            CSAtxTextBox.Text = patientData.CSATX;
+            // CSMTADMRatio は計算値
+
+            // FV (大腿静脈)
+            FVTotalAdmTextBox.Text = patientData.FVTotalADM;
+            FVMatureAdmTextBox.Text = patientData.FVMatureADM;
+            FVAtxTextBox.Text = patientData.FVATX;
+
+            // PA (肺静脈)
+            PATotalAdmTextBox.Text = patientData.PATotalADM;
+            PAMatureAdmTextBox.Text = patientData.PAMatureADM;
+            PAAtxTextBox.Text = patientData.PAATX;
+
+            // 計算値は自動計算されるため設定不要
+
+            // TextChanged イベントを発生させて要約を更新
+            TextBox_TextChanged(null, null);
+        }
+
     }
 
     // サンプリングデータクラス

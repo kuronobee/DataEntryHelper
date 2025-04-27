@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.IO;
-using System.Text.Json;
 using DataEntryHelper.Controls;
+using DataEntryHelper.Services;
 
 namespace DataEntryHelper
 {
@@ -12,9 +11,162 @@ namespace DataEntryHelper
     /// </summary>
     public partial class MainWindow : Window
     {
+        // データベースサービス
+        private readonly DatabaseService _databaseService;
+
+        // 現在の患者ID
+        private string _currentPatientId = "";
+
+        // 新規モードかどうか
+        private bool _isNewMode = true;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            // データベースサービスの初期化
+            _databaseService = new DatabaseService();
+
+            // 患者リスト画面を表示
+            ShowPatientListWindow();
+        }
+
+        /// <summary>
+        /// 患者リスト画面を表示
+        /// </summary>
+        private void ShowPatientListWindow()
+        {
+            PatientListWindow patientListWindow = new PatientListWindow();
+
+            if (patientListWindow.ShowDialog() == true)
+            {
+                if (patientListWindow.IsNewPatient)
+                {
+                    // 新規患者モード
+                    _isNewMode = true;
+                    _currentPatientId = "";
+                    ClearAllData();
+                }
+                else
+                {
+                    // 既存患者データ読み込みモード
+                    _isNewMode = false;
+                    _currentPatientId = patientListWindow.SelectedPatientId;
+                    LoadPatientData(_currentPatientId);
+                }
+            }
+            else
+            {
+                // キャンセルされた場合はアプリケーションを終了
+                Application.Current.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// 患者データを読み込む
+        /// </summary>
+        private void LoadPatientData(string patientId)
+        {
+            // データベースから患者データを読み込む
+            PatientData patientData = _databaseService.LoadPatientData(patientId);
+
+            if (patientData != null)
+            {
+                // 各コントロールにデータを設定
+                SetDataToControls(patientData);
+
+                // タイトルを更新
+                this.Title = $"患者データ入力フォーム - 患者ID: {patientId}";
+            }
+            else
+            {
+                MessageBox.Show($"患者ID「{patientId}」のデータが見つかりませんでした。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// 患者データを各コントロールに設定
+        /// </summary>
+        private void SetDataToControls(PatientData patientData)
+        {
+            // すべてのデータをクリア
+            ClearAllData();
+
+            try
+            {
+                // 患者基本情報の設定
+                if (PatientDataCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    PatientDataCtrl.SetPatientData(patientData);
+                }
+
+                // 心房細動情報の設定
+                if (AtrialFibrillationCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    AtrialFibrillationCtrl.SetAtrialFibrillationData(patientData);
+                    // スコア更新
+                    UpdateAtrialFibrillationRiskScores();
+                }
+
+                // 心エコー情報の設定
+                if (EchocardiogramCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    EchocardiogramCtrl.SetEchocardiogramData(patientData);
+                    // 心不全情報更新
+                    UpdateEchocardiogramHeartFailureStatus();
+                }
+
+                // 血液検査情報の設定
+                if (BloodTestCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    BloodTestCtrl.SetBloodTestData(patientData);
+                }
+
+                // 心電図・レントゲン情報の設定
+                if (EcgXrayCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    EcgXrayCtrl.SetEcgXrayData(patientData);
+                }
+
+                // 薬物療法情報の設定
+                if (MedicationCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    MedicationCtrl.SetMedicationData(patientData);
+                }
+
+                // アブレーション情報の設定
+                if (AblationCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    AblationCtrl.SetAblationData(patientData);
+                }
+
+                // サンプリング情報の設定
+                if (SamplingCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    SamplingCtrl.SetSamplingData(patientData);
+                    // BSA情報を更新
+                    UpdateSamplingBSA();
+                }
+
+                // T-TAS情報の設定
+                if (TTASCtrl != null)
+                {
+                    // このメソッドを実装する必要がある
+                    TTASCtrl.SetTTASData(patientData);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"データ読み込み中にエラーが発生しました: {ex.Message}", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // タブ選択変更時のイベントハンドラ
@@ -40,16 +192,6 @@ namespace DataEntryHelper
                     // サンプリングタブが選択された場合にBSA情報を渡す
                     UpdateSamplingBSA();
                 }
-            }
-        }
-        private void UpdateSamplingBSA()
-        {
-            if (SamplingCtrl != null && PatientDataCtrl != null)
-            {
-                // 患者データから体表面積を取得
-                PatientData patientData = PatientDataCtrl.GetPatientData();
-                // BSA情報をサンプリングコントロールに渡す
-                SamplingCtrl.SetBSA(patientData.BSA);
             }
         }
 
@@ -88,6 +230,18 @@ namespace DataEntryHelper
             }
         }
 
+        // サンプリングタブのBSA情報更新
+        private void UpdateSamplingBSA()
+        {
+            if (SamplingCtrl != null && PatientDataCtrl != null)
+            {
+                // 患者データから体表面積を取得
+                PatientData patientData = PatientDataCtrl.GetPatientData();
+                // BSA情報をサンプリングコントロールに渡す
+                SamplingCtrl.SetBSA(patientData.BSA);
+            }
+        }
+
         // 保存ボタンクリック時のイベントハンドラ
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -95,6 +249,42 @@ namespace DataEntryHelper
             {
                 // 患者データコントロールからデータを取得
                 PatientData patientData = PatientDataCtrl.GetPatientData();
+
+                // 患者IDが空白の場合は警告
+                if (string.IsNullOrWhiteSpace(patientData.Id))
+                {
+                    MessageBox.Show("患者IDが入力されていません。", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MainTabControl.SelectedIndex = 0; // 患者データタブに戻る
+                    return;
+                }
+
+                // 新規モードの場合は現在の患者IDを更新
+                if (_isNewMode)
+                {
+                    _currentPatientId = patientData.Id;
+                    _isNewMode = false;
+                    this.Title = $"患者データ入力フォーム - 患者ID: {_currentPatientId}";
+                }
+                else if (_currentPatientId != patientData.Id)
+                {
+                    // 既存データ編集モードでIDが変更された場合は警告
+                    MessageBoxResult result = MessageBox.Show(
+                        $"患者IDが変更されました。\n元のID: {_currentPatientId}\n新しいID: {patientData.Id}\n\n新しいIDで保存しますか？",
+                        "患者ID変更の確認",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        _currentPatientId = patientData.Id;
+                        this.Title = $"患者データ入力フォーム - 患者ID: {_currentPatientId}";
+                    }
+                    else
+                    {
+                        // 元のIDに戻す
+                        patientData.Id = _currentPatientId;
+                    }
+                }
 
                 // 心房細動データを取得して結合
                 if (AtrialFibrillationCtrl != null)
@@ -286,7 +476,7 @@ namespace DataEntryHelper
                     patientData.MedicationSummary = medData.MedicationSummary;
                 }
 
-                // アブレーションデータを取得して結合（追加部分）
+                // アブレーションデータを取得して結合
                 if (AblationCtrl != null)
                 {
                     AblationData ablationData = AblationCtrl.GetAblationData();
@@ -311,6 +501,7 @@ namespace DataEntryHelper
                     patientData.MaxVoltageMean = ablationData.MaxVoltageMean;
                     patientData.AblationSummary = ablationData.AblationSummary;
                 }
+
                 // サンプリングデータを取得して結合
                 if (SamplingCtrl != null)
                 {
@@ -341,6 +532,7 @@ namespace DataEntryHelper
                     patientData.DeltaMatureRatio = samplingData.DeltaMatureRatio;
                     patientData.SamplingSummary = samplingData.SamplingSummary;
                 }
+
                 // T-TASデータを取得して結合
                 if (TTASCtrl != null)
                 {
@@ -349,20 +541,14 @@ namespace DataEntryHelper
                     patientData.TTASAR = ttasData.TTASAR;
                     patientData.TTASSummary = ttasData.TTASSummary;
                 }
-                // ディレクトリがなければ作成
-                string directoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PatientData");
-                Directory.CreateDirectory(directoryPath);
 
-                // タイムスタンプとIDを含むファイル名を生成
-                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                string fileName = $"Patient_{patientData.Id}_{timestamp}.json";
-                string filePath = Path.Combine(directoryPath, fileName);
+                // データベースに保存
+                bool success = _databaseService.SavePatientData(patientData);
 
-                // シリアライズして保存
-                string jsonData = JsonSerializer.Serialize(patientData, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(filePath, jsonData);
-
-                MessageBox.Show($"患者データが保存されました。\nファイル: {filePath}", "保存完了", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (success)
+                {
+                    MessageBox.Show($"患者データを保存しました。\n患者ID: {patientData.Id}", "保存完了", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
@@ -373,9 +559,34 @@ namespace DataEntryHelper
         // クリアボタンクリック時のイベントハンドラ
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show(
+                "現在のデータをクリアして新規患者モードに移行しますか？\n保存されていないデータは失われます。",
+                "データクリアの確認",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // 新規モードに設定
+                _isNewMode = true;
+                _currentPatientId = "";
+                this.Title = "患者データ入力フォーム";
+
+                // 全データクリア
+                ClearAllData();
+            }
+        }
+
+        // すべてのデータをクリア
+        private void ClearAllData()
+        {
             // 全てのユーザーコントロールのデータをクリア
             PatientDataCtrl.ClearData();
-            AtrialFibrillationCtrl.ClearData();
+
+            if (AtrialFibrillationCtrl != null)
+            {
+                AtrialFibrillationCtrl.ClearData();
+            }
 
             if (EchocardiogramCtrl != null)
             {
@@ -397,23 +608,68 @@ namespace DataEntryHelper
                 MedicationCtrl.ClearData();
             }
 
-            // アブレーションデータクリア（追加部分）
+            // アブレーションデータクリア
             if (AblationCtrl != null)
             {
                 AblationCtrl.ClearData();
             }
+
             // サンプリングデータクリア
             if (SamplingCtrl != null)
             {
                 SamplingCtrl.ClearData();
             }
+
             // T-TASデータクリア
             if (TTASCtrl != null)
             {
                 TTASCtrl.ClearData();
             }
+
             // 患者データタブに戻る
             MainTabControl.SelectedIndex = 0;
+        }
+
+        // メニューバーの「患者リスト」ボタンクリック時のイベントハンドラ
+        private void PatientListMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // 現在のデータに未保存の変更がある場合は確認
+            MessageBoxResult result = MessageBox.Show(
+                "患者リストを開きます。\n保存されていないデータは失われる可能性があります。\n続行しますか？",
+                "患者リストを開く",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                ShowPatientListWindow();
+            }
+        }
+
+        // 終了メニューのクリックイベントハンドラ
+        private void ExitMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Close(); // ウィンドウを閉じる（OnClosingイベントが発生）
+        }
+
+        // ウィンドウ閉じる時のイベントハンドラ
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            // 閉じる前に確認ダイアログを表示
+            MessageBoxResult result = MessageBox.Show(
+                "アプリケーションを終了しますか？\n保存されていないデータは失われます。",
+                "終了確認",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true; // 終了をキャンセル
+            }
+            else
+            {
+                base.OnClosing(e); // 通常の終了処理
+            }
         }
     }
 }

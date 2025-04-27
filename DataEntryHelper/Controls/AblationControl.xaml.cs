@@ -217,6 +217,104 @@ namespace DataEntryHelper.Controls
 
             AblationSummaryTextBlock.Text = summary.ToString();
         }
+
+        /// <summary>
+        /// アブレーションデータを設定
+        /// </summary>
+        /// <param name="patientData">設定する患者データ</param>
+        public void SetAblationData(PatientData patientData)
+        {
+            // マッピングシステム
+            if (!string.IsNullOrEmpty(patientData.MappingSystem))
+            {
+                foreach (ComboBoxItem item in MappingSystemComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.MappingSystem)
+                    {
+                        MappingSystemComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // マッピングリズム
+            if (!string.IsNullOrEmpty(patientData.MappingRhythm))
+            {
+                foreach (ComboBoxItem item in MappingRhythmComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.MappingRhythm)
+                    {
+                        MappingRhythmComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // ペーシング部位
+            if (!string.IsNullOrEmpty(patientData.PacingSite))
+            {
+                foreach (ComboBoxItem item in PacingSiteComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.PacingSite)
+                    {
+                        PacingSiteComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // プレマップ
+            if (!string.IsNullOrEmpty(patientData.PreMap))
+            {
+                foreach (ComboBoxItem item in PreMapComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.PreMap)
+                    {
+                        PreMapComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // 施行回数
+            ProcedureCountTextBox.Text = patientData.ProcedureCount;
+
+            // 処置内容
+            PVICheckBox.IsChecked = patientData.ProcedurePVI;
+            PosteriorWallIsolationCheckBox.IsChecked = patientData.ProcedurePosteriorWallIsolation;
+            CFAEFAAMCheckBox.IsChecked = patientData.ProcedureCFAE_FAAM;
+            ProcedureOtherTextBox.Text = patientData.ProcedureOther;
+
+            // 結果
+            if (!string.IsNullOrEmpty(patientData.Result))
+            {
+                foreach (ComboBoxItem item in ResultComboBox.Items)
+                {
+                    if (item.Content.ToString() == patientData.Result)
+                    {
+                        ResultComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // 電位情報
+            LVAsTextBox.Text = patientData.LVAs;
+            VGLATextBox.Text = patientData.VGLA;
+
+            // 最大電位
+            MaxVoltageAnteriorTextBox.Text = patientData.MaxVoltageAnterior;
+            MaxVoltageSeptumTextBox.Text = patientData.MaxVoltageSeptum;
+            MaxVoltageRoofTextBox.Text = patientData.MaxVoltageRoof;
+            MaxVoltageInfTextBox.Text = patientData.MaxVoltageInf;
+            MaxVoltagePostTextBox.Text = patientData.MaxVoltagePost;
+            MaxVoltageLatTextBox.Text = patientData.MaxVoltageLat;
+            MaxVoltageMeanTextBox.Text = patientData.MaxVoltageMean;
+
+            // 要約を更新
+            UpdateAblationSummary(null, null);
+        }
+
     }
 
     // アブレーションデータクラス
