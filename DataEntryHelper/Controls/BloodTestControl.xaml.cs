@@ -63,6 +63,10 @@ namespace DataEntryHelper.Controls
         // テキストボックスの値変更時のイベントハンドラ
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // FIB-4インデックスを計算
+            CalculateFib4Index();
+
+            // 異常値リストと臨床的意義を更新
             UpdateSummary();
         }
 
@@ -123,6 +127,46 @@ namespace DataEntryHelper.Controls
             ClinicalImplicationsTextBlock.Text = clinicalImplications.ToString();
         }
 
+        private double _patientAge = 0;
+        private bool _hasPatientAge = false;
+
+        // 年齢情報を設定するメソッド
+        public void SetPatientAge(string age)
+        {
+            if (double.TryParse(age, out double ageValue))
+            {
+                _patientAge = ageValue;
+                _hasPatientAge = true;
+                // 年齢が設定されたらFIB-4を再計算
+                CalculateFib4Index();
+            }
+            else
+            {
+                _hasPatientAge = false;
+            }
+        }
+        // FIB-4インデックス計算メソッド
+        private void CalculateFib4Index()
+        {
+            if (_hasPatientAge &&
+                double.TryParse(AstTextBox.Text, out double ast) &&
+                double.TryParse(AltTextBox.Text, out double alt) &&
+                double.TryParse(PltTextBox.Text, out double plt) &&
+                plt > 0 && alt > 0)  // ALTが0だとルート計算でエラーになるため
+            {
+                try
+                {
+                    // FIB-4 = 年齢(years) × AST(U/L) / (血小板数(10^9/L) × √ALT(U/L))
+                    double pltInCorrectUnit = plt / 1000; // 10^3/μL から 10^9/L への変換
+                    double fib4 = (_patientAge * ast) / (pltInCorrectUnit * Math.Sqrt(alt));
+                    Fib4iTextBox.Text = fib4.ToString("F2");
+                }
+                catch (Exception)
+                {
+                    Fib4iTextBox.Text = "";
+                }
+            }
+        }
         // 個別の検査値を評価
         private void EvaluateValue(TextBox textBox, string testName, StringBuilder abnormalValues)
         {

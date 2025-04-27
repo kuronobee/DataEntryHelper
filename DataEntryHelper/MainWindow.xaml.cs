@@ -124,6 +124,7 @@ namespace DataEntryHelper
                 {
                     // このメソッドを実装する必要がある
                     BloodTestCtrl.SetBloodTestData(patientData);
+                    BloodTestCtrl.SetPatientAge(patientData.Age);
                 }
 
                 // 心電図・レントゲン情報の設定
@@ -187,6 +188,11 @@ namespace DataEntryHelper
                     // 心エコータブが選択された場合に心不全情報を更新
                     UpdateEchocardiogramHeartFailureStatus();
                 }
+                else if (tabHeader == "血液検査")
+                {
+                    // 血液検査タブが選択された場合に年齢情報を更新
+                    UpdateFib4IndexAge();
+                }
                 else if (tabHeader == "サンプリング")
                 {
                     // サンプリングタブが選択された場合にBSA情報を渡す
@@ -200,7 +206,8 @@ namespace DataEntryHelper
         {
             // リスク因子が変更された場合、心房細動タブのスコアを更新
             UpdateAtrialFibrillationRiskScores();
-
+            // 心房細動・心不全の更新の後に
+            UpdateFib4IndexAge();
             // 心不全情報も更新
             UpdateEchocardiogramHeartFailureStatus();
         }
@@ -645,7 +652,17 @@ namespace DataEntryHelper
                 ShowPatientListWindow();
             }
         }
-
+        // FIB-4インデックス計算用の年齢情報更新
+        private void UpdateFib4IndexAge()
+        {
+            if (BloodTestCtrl != null && PatientDataCtrl != null)
+            {
+                // 患者データから年齢を取得
+                PatientData patientData = PatientDataCtrl.GetPatientData();
+                // 血液検査コントロールに年齢情報を渡す
+                BloodTestCtrl.SetPatientAge(patientData.Age);
+            }
+        }
         // 終了メニューのクリックイベントハンドラ
         private void ExitMenu_Click(object sender, RoutedEventArgs e)
         {
