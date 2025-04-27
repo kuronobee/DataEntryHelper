@@ -38,8 +38,15 @@
         <Menu Grid.Row="0">
             <MenuItem Header="ファイル">
                 <MenuItem Header="患者リスト" Click="PatientListMenu_Click"/>
+                <MenuItem Header="CSV出力">
+                    <MenuItem Header="現在の患者をCSV出力" Click="ExportCurrentPatientMenu_Click"/>
+                    <MenuItem Header="全患者データをCSV出力" Click="ExportAllPatientsMenu_Click"/>
+                </MenuItem>
                 <Separator/>
                 <MenuItem Header="終了" Click="ExitMenu_Click"/>
+            </MenuItem>
+            <MenuItem Header="ツール">
+                <MenuItem Header="血液検査データをクリップボードからインポート" Click="ImportBloodTestFromClipboard_Click"/>
             </MenuItem>
         </Menu>
 

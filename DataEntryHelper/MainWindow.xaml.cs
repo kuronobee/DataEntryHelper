@@ -13,6 +13,7 @@ namespace DataEntryHelper
     {
         // データベースサービス
         private readonly DatabaseService _databaseService;
+        private readonly ExportService _exportService;
 
         // 現在の患者ID
         private string _currentPatientId = "";
@@ -26,7 +27,8 @@ namespace DataEntryHelper
 
             // データベースサービスの初期化
             _databaseService = new DatabaseService();
-
+            // CSV出力サービスの初期化
+            _exportService = new ExportService();
             // 患者リスト画面を表示
             ShowPatientListWindow();
         }
@@ -687,6 +689,52 @@ namespace DataEntryHelper
             {
                 base.OnClosing(e); // 通常の終了処理
             }
+        }
+
+        // 血液検査インポートメニューのクリックイベントハンドラ
+        private void ImportBloodTestFromClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            if (BloodTestCtrl != null)
+            {
+                // 血液検査タブに切り替え
+                MainTabControl.SelectedIndex = 3; // 血液検査タブのインデックスに合わせて調整
+
+                // インポート実行
+                BloodTestCtrl.ImportFromClipboard();
+            }
+        }
+
+        private void ExportCurrentPatientMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // 新規モードの場合や患者IDが設定されていない場合はエラー
+            if (_isNewMode || string.IsNullOrEmpty(_currentPatientId))
+            {
+                MessageBox.Show("現在の患者データが保存されていません。\n先にデータを保存してください。", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // 現在の患者データを保存確認
+            MessageBoxResult result = MessageBox.Show("現在の患者データをCSVに出力する前に保存しますか？", "保存確認", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Cancel)
+            {
+                return;
+            }
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // 保存ボタンのクリックイベントを呼び出す
+                SaveButton_Click(sender, e);
+            }
+
+            // CSVエクスポート
+            _exportService.ExportPatientToCSV(_currentPatientId);
+        }
+
+        private void ExportAllPatientsMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // 全患者データをCSVエクスポート
+            _exportService.ExportAllPatientsToCSV();
         }
     }
 }

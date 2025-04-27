@@ -9,6 +9,16 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="血液検査" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+                <Button Grid.Column="1" x:Name="ImportFromClipboardButton" Content="クリップボードからインポート" 
+            Padding="10,5" Margin="0,0,10,0" Click="ImportFromClipboardButton_Click"/>
+            </Grid>
             <GroupBox Header="血液検査">
                 <Grid>
                     <Grid.ColumnDefinitions>

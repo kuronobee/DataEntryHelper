@@ -166,7 +166,8 @@ namespace DataEntryHelper.Controls
                     Fib4iTextBox.Text = "";
                 }
             }
-        }
+        }       
+        
         // 個別の検査値を評価
         private void EvaluateValue(TextBox textBox, string testName, StringBuilder abnormalValues)
         {
@@ -415,6 +416,80 @@ namespace DataEntryHelper.Controls
 
             // TextChanged イベントを発生させて要約を更新
             TextBox_TextChanged(null, null);
+        }
+
+        // クリップボードからデータを自動入力するメソッド
+        public void ImportFromClipboard()
+        {
+            try
+            {
+                // クリップボードからテキストを取得
+                string clipboardText = Clipboard.GetText();
+
+                if (string.IsNullOrEmpty(clipboardText))
+                {
+                    MessageBox.Show("クリップボードにテキストデータがありません。", "エラー", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // テキストからデータを抽出
+                var extractedData = Services.CsvLabResultExtractor.ExtractFromText(clipboardText);
+
+                if (extractedData.Count == 0 || extractedData.All(kv => string.IsNullOrEmpty(kv.Value)))
+                {
+                    MessageBox.Show("クリップボードのテキストから血液検査データが抽出できませんでした。", "抽出エラー", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // 各テキストボックスにデータを設定
+                SetValueIfPresent(extractedData, "TP", TpTextBox);
+                SetValueIfPresent(extractedData, "Alb", AlbTextBox);
+                SetValueIfPresent(extractedData, "BUN", BunTextBox);
+                SetValueIfPresent(extractedData, "CRE", CreTextBox);
+                SetValueIfPresent(extractedData, "CRP", CrpTextBox);
+                SetValueIfPresent(extractedData, "CK", CkTextBox);
+                SetValueIfPresent(extractedData, "AST", AstTextBox);
+                SetValueIfPresent(extractedData, "ALT", AltTextBox);
+                SetValueIfPresent(extractedData, "LDL-C", LdlTextBox);
+                SetValueIfPresent(extractedData, "HDL-C", HdlTextBox);
+                SetValueIfPresent(extractedData, "TG", TgTextBox);
+                SetValueIfPresent(extractedData, "HbA1c", Hba1cTextBox);
+                SetValueIfPresent(extractedData, "Glu", GluTextBox);
+                SetValueIfPresent(extractedData, "Hb", HbTextBox);
+                SetValueIfPresent(extractedData, "WBC", WbcTextBox);
+                SetValueIfPresent(extractedData, "PLT", PltTextBox);
+                SetValueIfPresent(extractedData, "PT-INR", PtInrTextBox);
+                SetValueIfPresent(extractedData, "APTT", ApttTextBox);
+                SetValueIfPresent(extractedData, "UA", UaTextBox);
+                SetValueIfPresent(extractedData, "BNP", BnpTextBox);
+
+                // FIB-4インデックスは自動計算される
+                CalculateFib4Index();
+
+                // 要約を更新
+                UpdateSummary();
+
+                MessageBox.Show("クリップボードから血液検査データを取り込みました。", "取り込み完了", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"データ取り込み中にエラーが発生しました: {ex.Message}", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // 抽出データから値を設定するヘルパーメソッド
+        private void SetValueIfPresent(IDictionary<string, string> data, string key, TextBox textBox)
+        {
+            if (data.TryGetValue(key, out string value) && !string.IsNullOrEmpty(value))
+            {
+                textBox.Text = value;
+            }
+        }
+
+        // インポートボタンのクリックイベントハンドラ
+        private void ImportFromClipboardButton_Click(object sender, RoutedEventArgs e)
+        {
+            ImportFromClipboard();
         }
 
     }
