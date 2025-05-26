@@ -20,7 +20,7 @@ namespace DataEntryHelper.Controls
         private void InitializeComboBoxes()
         {
             // 心房細動タブのComboBoxの初期値設定
-            AtrialFibrillationTypeComboBox.SelectedIndex = 0; // paroxysmal
+            AtrialFibrillationTypeComboBox.SelectedIndex = 0; // 空白
             AtrialFibrillationSymptomsComboBox.SelectedIndex = 0; // 空白
         }
 
@@ -161,8 +161,8 @@ namespace DataEntryHelper.Controls
         {
             return new AtrialFibrillationData
             {
-                AtrialFibrillationType = AtrialFibrillationTypeComboBox.Text,
-                AtrialFibrillationSymptoms = AtrialFibrillationSymptomsComboBox.Text,
+                AtrialFibrillationType = GetComboBoxSelectedText(AtrialFibrillationTypeComboBox),
+                AtrialFibrillationSymptoms = GetComboBoxSelectedText(AtrialFibrillationSymptomsComboBox),
                 Chads2Score = Chads2ScoreTextBox.Text,
                 Cha2ds2VascScore = Cha2ds2VascScoreTextBox.Text
             };
@@ -187,24 +187,57 @@ namespace DataEntryHelper.Controls
         public void SetAtrialFibrillationData(PatientData patientData)
         {
             // 心房細動タイプ
-            if (patientData.AtrialFibrillationType == "paroxysmal")
-                AtrialFibrillationTypeComboBox.SelectedIndex = 0;
-            else if (patientData.AtrialFibrillationType == "persistent")
-                AtrialFibrillationTypeComboBox.SelectedIndex = 1;
-            else if (patientData.AtrialFibrillationType == "chronic")
-                AtrialFibrillationTypeComboBox.SelectedIndex = 2;
-            else
-                AtrialFibrillationTypeComboBox.SelectedIndex = 0;
+            SetComboBoxByText(AtrialFibrillationTypeComboBox, patientData.AtrialFibrillationType);
 
             // 心房細動の症状
-            if (patientData.AtrialFibrillationSymptoms == "あり")
-                AtrialFibrillationSymptomsComboBox.SelectedIndex = 1;
-            else if (patientData.AtrialFibrillationSymptoms == "なし")
-                AtrialFibrillationSymptomsComboBox.SelectedIndex = 2;
-            else
-                AtrialFibrillationSymptomsComboBox.SelectedIndex = 0;
+            SetComboBoxByText(AtrialFibrillationSymptomsComboBox, patientData.AtrialFibrillationSymptoms);
 
             // スコアは計算値のため設定不要
+        }
+
+        /// <summary>
+        /// ComboBoxから選択されたテキストを取得するヘルパーメソッド
+        /// </summary>
+        /// <param name="comboBox">対象のComboBox</param>
+        /// <returns>選択されたテキスト（選択されていない場合は空文字）</returns>
+        private string GetComboBoxSelectedText(ComboBox comboBox)
+        {
+            if (comboBox.SelectedItem == null)
+                return "";
+
+            ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
+            if (selectedItem == null)
+                return "";
+
+            return selectedItem.Content.ToString();
+        }
+
+        /// <summary>
+        /// ComboBoxにテキスト値を設定するヘルパーメソッド
+        /// </summary>
+        /// <param name="comboBox">対象のComboBox</param>
+        /// <param name="text">設定するテキスト</param>
+        private void SetComboBoxByText(ComboBox comboBox, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                comboBox.SelectedIndex = 0; // 空白を選択
+                return;
+            }
+
+            // アイテムを検索して一致するものを選択
+            for (int i = 0; i < comboBox.Items.Count; i++)
+            {
+                ComboBoxItem item = comboBox.Items[i] as ComboBoxItem;
+                if (item != null && item.Content.ToString() == text)
+                {
+                    comboBox.SelectedIndex = i;
+                    return;
+                }
+            }
+
+            // 一致するアイテムが見つからない場合は空白を選択
+            comboBox.SelectedIndex = 0;
         }
     }
 

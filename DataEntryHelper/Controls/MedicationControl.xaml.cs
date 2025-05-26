@@ -735,12 +735,25 @@ namespace DataEntryHelper.Controls
         /// </summary>
         private void SetYesNoComboBox(ComboBox comboBox, string value)
         {
-            if (value == "あり")
-                comboBox.SelectedIndex = 0;
-            else if (value == "なし")
-                comboBox.SelectedIndex = 1;
-            else
-                comboBox.SelectedIndex = -1; // 未選択
+            if (string.IsNullOrEmpty(value))
+            {
+                comboBox.SelectedIndex = 0; // 空白を選択
+                return;
+            }
+
+            // アイテムを検索して一致するものを選択
+            for (int i = 0; i < comboBox.Items.Count; i++)
+            {
+                ComboBoxItem item = comboBox.Items[i] as ComboBoxItem;
+                if (item != null && item.Content.ToString() == value)
+                {
+                    comboBox.SelectedIndex = i;
+                    return;
+                }
+            }
+
+            // 一致するアイテムが見つからない場合は空白を選択
+            comboBox.SelectedIndex = 0;
         }
 
         /// <summary>

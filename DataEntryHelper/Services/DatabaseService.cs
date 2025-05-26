@@ -336,14 +336,14 @@ namespace DataEntryHelper.Services
                             {
                                 patientList.Add(new PatientListItem
                                 {
-                                    Id = reader["Id"].ToString(),
-                                    Gender = reader["Gender"].ToString(),
-                                    Age = reader["Age"].ToString(),
-                                    AtrialFibrillationType = reader["AtrialFibrillationType"].ToString(),
-                                    Hypertension = reader["Hypertension"].ToString(),
-                                    Diabetes = reader["Diabetes"].ToString(),
-                                    CreatedAt = reader["CreatedAt"].ToString(),
-                                    UpdatedAt = reader["UpdatedAt"].ToString()
+                                    Id = reader["Id"]?.ToString() ?? "",
+                                    Gender = reader["Gender"]?.ToString() ?? "",
+                                    Age = reader["Age"]?.ToString() ?? "",
+                                    AtrialFibrillationType = reader["AtrialFibrillationType"]?.ToString() ?? "",
+                                    Hypertension = reader["Hypertension"]?.ToString() ?? "",
+                                    Diabetes = reader["Diabetes"]?.ToString() ?? "",
+                                    CreatedAt = reader["CreatedAt"]?.ToString() ?? "",
+                                    UpdatedAt = reader["UpdatedAt"]?.ToString() ?? ""
                                 });
                             }
                         }

@@ -61,7 +61,7 @@ namespace DataEntryHelper.Controls
         }
 
         // テキストボックスの値変更時のイベントハンドラ
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged(object? sender, TextChangedEventArgs? e)
         {
             // FIB-4インデックスを計算
             CalculateFib4Index();
@@ -480,7 +480,7 @@ namespace DataEntryHelper.Controls
         // 抽出データから値を設定するヘルパーメソッド
         private void SetValueIfPresent(IDictionary<string, string> data, string key, TextBox textBox)
         {
-            if (data.TryGetValue(key, out string value) && !string.IsNullOrEmpty(value))
+            if (data.TryGetValue(key, out string? value) && !string.IsNullOrEmpty(value))
             {
                 textBox.Text = value;
             }

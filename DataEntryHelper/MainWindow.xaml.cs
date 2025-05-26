@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using DataEntryHelper.Controls;
@@ -13,6 +14,7 @@ namespace DataEntryHelper
     {
         // データベースサービス
         private readonly DatabaseService _databaseService;
+        // エクスポートサービス
         private readonly ExportService _exportService;
 
         // 現在の患者ID
@@ -27,40 +29,181 @@ namespace DataEntryHelper
 
             // データベースサービスの初期化
             _databaseService = new DatabaseService();
-            // CSV出力サービスの初期化
+            // エクスポートサービスの初期化
             _exportService = new ExportService();
-            // 患者リスト画面を表示
-            ShowPatientListWindow();
+
+            // 患者リストを読み込み
+            LoadPatientList();
+
+            // 初期状態の設定
+            UpdateButtonState();
+            UpdateStatusDisplay();
+
+            // 新規患者モードで開始
+            StartNewPatientMode();
         }
 
         /// <summary>
-        /// 患者リスト画面を表示
+        /// 患者リストの読み込み
         /// </summary>
-        private void ShowPatientListWindow()
+        private void LoadPatientList()
         {
-            PatientListWindow patientListWindow = new PatientListWindow();
+            List<PatientListItem> patients = _databaseService.GetPatientList();
+            PatientDataGrid.ItemsSource = patients;
+            UpdatePatientCount(patients.Count);
+        }
 
-            if (patientListWindow.ShowDialog() == true)
+        /// <summary>
+        /// ボタン状態の更新
+        /// </summary>
+        private void UpdateButtonState()
+        {
+            bool isPatientSelected = PatientDataGrid.SelectedItem != null;
+            DeleteButton.IsEnabled = isPatientSelected;
+        }
+
+        /// <summary>
+        /// ステータス表示の更新
+        /// </summary>
+        private void UpdateStatusDisplay()
+        {
+            if (_isNewMode)
             {
-                if (patientListWindow.IsNewPatient)
-                {
-                    // 新規患者モード
-                    _isNewMode = true;
-                    _currentPatientId = "";
-                    ClearAllData();
-                }
-                else
-                {
-                    // 既存患者データ読み込みモード
-                    _isNewMode = false;
-                    _currentPatientId = patientListWindow.SelectedPatientId;
-                    LoadPatientData(_currentPatientId);
-                }
+                StatusTextBlock.Text = "新規患者モード";
+                StatusTextBlock.Foreground = System.Windows.Media.Brushes.Green;
+            }
+            else if (!string.IsNullOrEmpty(_currentPatientId))
+            {
+                StatusTextBlock.Text = $"患者ID: {_currentPatientId}";
+                StatusTextBlock.Foreground = System.Windows.Media.Brushes.Blue;
             }
             else
             {
-                // キャンセルされた場合はアプリケーションを終了
-                Application.Current.Shutdown();
+                StatusTextBlock.Text = "患者を選択してください";
+                StatusTextBlock.Foreground = System.Windows.Media.Brushes.Gray;
+            }
+        }
+
+        /// <summary>
+        /// 患者数の表示更新
+        /// </summary>
+        private void UpdatePatientCount(int count)
+        {
+            PatientCountTextBlock.Text = $"登録患者数: {count}人";
+        }
+
+        /// <summary>
+        /// 新規患者ボタンのクリックイベントハンドラ
+        /// </summary>
+        private void NewPatientButton_Click(object sender, RoutedEventArgs e)
+        {
+            StartNewPatientMode();
+        }
+
+        /// <summary>
+        /// 新規患者モードを開始
+        /// </summary>
+        private void StartNewPatientMode()
+        {
+            // 未保存の変更がある場合は確認
+            if (!_isNewMode || !string.IsNullOrEmpty(_currentPatientId))
+            {
+                MessageBoxResult result = MessageBox.Show(
+                    "新規患者モードに移行します。\n保存されていないデータは失われます。\n続行しますか？",
+                    "新規患者モード",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                {
+                    return;
+                }
+            }
+
+            // 新規モードに設定
+            _isNewMode = true;
+            _currentPatientId = "";
+            this.Title = "患者データ入力フォーム - 新規患者";
+
+            // データグリッドの選択を解除
+            PatientDataGrid.SelectedItem = null;
+
+            // 全データクリア
+            ClearAllData();
+
+            // ステータス更新
+            UpdateStatusDisplay();
+        }
+
+        /// <summary>
+        /// 更新ボタンのクリックイベントハンドラ
+        /// </summary>
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoadPatientList();
+        }
+
+        /// <summary>
+        /// 削除ボタンのクリックイベントハンドラ
+        /// </summary>
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PatientDataGrid.SelectedItem is PatientListItem selectedPatient)
+            {
+                // 削除確認
+                MessageBoxResult result = MessageBox.Show(
+                    $"患者ID「{selectedPatient.Id}」のデータを削除します。\nこの操作は元に戻せません。続行しますか？",
+                    "患者データ削除の確認",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // データベースから削除
+                    bool success = _databaseService.DeletePatient(selectedPatient.Id);
+
+                    if (success)
+                    {
+                        MessageBox.Show("患者データを削除しました。", "削除完了", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // 削除された患者が現在選択中の患者だった場合
+                        if (_currentPatientId == selectedPatient.Id)
+                        {
+                            StartNewPatientMode();
+                        }
+
+                        // リストを更新
+                        LoadPatientList();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// データグリッドの選択変更イベントハンドラ
+        /// </summary>
+        private void PatientDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateButtonState();
+
+            if (PatientDataGrid.SelectedItem is PatientListItem selectedPatient)
+            {
+                // 未保存の変更がある場合は確認
+                MessageBoxResult result = MessageBox.Show(
+                    $"患者ID「{selectedPatient.Id}」のデータを読み込みます。\n保存されていないデータは失われます。\n続行しますか？",
+                    "患者データ読み込み",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    LoadPatientData(selectedPatient.Id);
+                }
+                else
+                {
+                    // 選択を解除
+                    PatientDataGrid.SelectedItem = null;
+                }
             }
         }
 
@@ -77,8 +220,13 @@ namespace DataEntryHelper
                 // 各コントロールにデータを設定
                 SetDataToControls(patientData);
 
-                // タイトルを更新
+                // 編集モードに設定
+                _isNewMode = false;
+                _currentPatientId = patientId;
                 this.Title = $"患者データ入力フォーム - 患者ID: {patientId}";
+
+                // ステータス更新
+                UpdateStatusDisplay();
             }
             else
             {
@@ -99,32 +247,26 @@ namespace DataEntryHelper
                 // 患者基本情報の設定
                 if (PatientDataCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     PatientDataCtrl.SetPatientData(patientData);
                 }
 
                 // 心房細動情報の設定
                 if (AtrialFibrillationCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     AtrialFibrillationCtrl.SetAtrialFibrillationData(patientData);
-                    // スコア更新
                     UpdateAtrialFibrillationRiskScores();
                 }
 
                 // 心エコー情報の設定
                 if (EchocardiogramCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     EchocardiogramCtrl.SetEchocardiogramData(patientData);
-                    // 心不全情報更新
                     UpdateEchocardiogramHeartFailureStatus();
                 }
 
                 // 血液検査情報の設定
                 if (BloodTestCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     BloodTestCtrl.SetBloodTestData(patientData);
                     BloodTestCtrl.SetPatientAge(patientData.Age);
                 }
@@ -132,37 +274,31 @@ namespace DataEntryHelper
                 // 心電図・レントゲン情報の設定
                 if (EcgXrayCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     EcgXrayCtrl.SetEcgXrayData(patientData);
                 }
 
                 // 薬物療法情報の設定
                 if (MedicationCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     MedicationCtrl.SetMedicationData(patientData);
                 }
 
                 // アブレーション情報の設定
                 if (AblationCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     AblationCtrl.SetAblationData(patientData);
                 }
 
                 // サンプリング情報の設定
                 if (SamplingCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     SamplingCtrl.SetSamplingData(patientData);
-                    // BSA情報を更新
                     UpdateSamplingBSA();
                 }
 
                 // T-TAS情報の設定
                 if (TTASCtrl != null)
                 {
-                    // このメソッドを実装する必要がある
                     TTASCtrl.SetTTASData(patientData);
                 }
             }
@@ -182,22 +318,18 @@ namespace DataEntryHelper
 
                 if (tabHeader == "心房細動")
                 {
-                    // 心房細動タブが選択された場合にスコア計算を更新
                     UpdateAtrialFibrillationRiskScores();
                 }
                 else if (tabHeader == "心エコー")
                 {
-                    // 心エコータブが選択された場合に心不全情報を更新
                     UpdateEchocardiogramHeartFailureStatus();
                 }
                 else if (tabHeader == "血液検査")
                 {
-                    // 血液検査タブが選択された場合に年齢情報を更新
                     UpdateFib4IndexAge();
                 }
                 else if (tabHeader == "サンプリング")
                 {
-                    // サンプリングタブが選択された場合にBSA情報を渡す
                     UpdateSamplingBSA();
                 }
             }
@@ -206,11 +338,8 @@ namespace DataEntryHelper
         // 患者データリスク因子変更時のイベントハンドラ
         private void PatientDataCtrl_RiskFactorsChanged(object sender, EventArgs e)
         {
-            // リスク因子が変更された場合、心房細動タブのスコアを更新
             UpdateAtrialFibrillationRiskScores();
-            // 心房細動・心不全の更新の後に
             UpdateFib4IndexAge();
-            // 心不全情報も更新
             UpdateEchocardiogramHeartFailureStatus();
         }
 
@@ -219,7 +348,6 @@ namespace DataEntryHelper
         {
             if (AtrialFibrillationCtrl != null)
             {
-                // 患者データコントロールからデータを取得してリスクスコアを更新
                 PatientData patientData = PatientDataCtrl.GetPatientData();
                 AtrialFibrillationCtrl.UpdateRiskScores(patientData);
             }
@@ -230,11 +358,8 @@ namespace DataEntryHelper
         {
             if (EchocardiogramCtrl != null && PatientDataCtrl != null)
             {
-                // 患者データから心不全情報を取得
                 PatientData patientData = PatientDataCtrl.GetPatientData();
                 bool hasHeartFailure = patientData.HeartFailure == "あり";
-
-                // 心エコーコントロールに心不全情報を渡す
                 EchocardiogramCtrl.UpdateHeartFailureStatus(hasHeartFailure);
             }
         }
@@ -244,10 +369,18 @@ namespace DataEntryHelper
         {
             if (SamplingCtrl != null && PatientDataCtrl != null)
             {
-                // 患者データから体表面積を取得
                 PatientData patientData = PatientDataCtrl.GetPatientData();
-                // BSA情報をサンプリングコントロールに渡す
                 SamplingCtrl.SetBSA(patientData.BSA);
+            }
+        }
+
+        // FIB-4インデックス計算用の年齢情報更新
+        private void UpdateFib4IndexAge()
+        {
+            if (BloodTestCtrl != null && PatientDataCtrl != null)
+            {
+                PatientData patientData = PatientDataCtrl.GetPatientData();
+                BloodTestCtrl.SetPatientAge(patientData.Age);
             }
         }
 
@@ -557,6 +690,12 @@ namespace DataEntryHelper
                 if (success)
                 {
                     MessageBox.Show($"患者データを保存しました。\n患者ID: {patientData.Id}", "保存完了", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // 患者リストを更新
+                    LoadPatientList();
+
+                    // ステータス更新
+                    UpdateStatusDisplay();
                 }
             }
             catch (Exception ex)
@@ -568,113 +707,75 @@ namespace DataEntryHelper
         // クリアボタンクリック時のイベントハンドラ
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show(
-                "現在のデータをクリアして新規患者モードに移行しますか？\n保存されていないデータは失われます。",
-                "データクリアの確認",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
-            {
-                // 新規モードに設定
-                _isNewMode = true;
-                _currentPatientId = "";
-                this.Title = "患者データ入力フォーム";
-
-                // 全データクリア
-                ClearAllData();
-            }
+            StartNewPatientMode();
         }
 
         // すべてのデータをクリア
         private void ClearAllData()
         {
-            // 全てのユーザーコントロールのデータをクリア
             PatientDataCtrl.ClearData();
 
             if (AtrialFibrillationCtrl != null)
-            {
                 AtrialFibrillationCtrl.ClearData();
-            }
 
             if (EchocardiogramCtrl != null)
-            {
                 EchocardiogramCtrl.ClearData();
-            }
 
             if (BloodTestCtrl != null)
-            {
                 BloodTestCtrl.ClearData();
-            }
 
             if (EcgXrayCtrl != null)
-            {
                 EcgXrayCtrl.ClearData();
-            }
 
             if (MedicationCtrl != null)
-            {
                 MedicationCtrl.ClearData();
-            }
 
-            // アブレーションデータクリア
             if (AblationCtrl != null)
-            {
                 AblationCtrl.ClearData();
-            }
 
-            // サンプリングデータクリア
             if (SamplingCtrl != null)
-            {
                 SamplingCtrl.ClearData();
-            }
 
-            // T-TASデータクリア
             if (TTASCtrl != null)
-            {
                 TTASCtrl.ClearData();
-            }
 
-            // 患者データタブに戻る
             MainTabControl.SelectedIndex = 0;
         }
 
-        // メニューバーの「患者リスト」ボタンクリック時のイベントハンドラ
-        private void PatientListMenu_Click(object sender, RoutedEventArgs e)
+        // CSVエクスポートメニュー用のイベントハンドラ
+        private void ExportCurrentPatientMenu_Click(object sender, RoutedEventArgs e)
         {
-            // 現在のデータに未保存の変更がある場合は確認
-            MessageBoxResult result = MessageBox.Show(
-                "患者リストを開きます。\n保存されていないデータは失われる可能性があります。\n続行しますか？",
-                "患者リストを開く",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
+            if (_isNewMode || string.IsNullOrEmpty(_currentPatientId))
+            {
+                MessageBox.Show("現在の患者データが保存されていません。\n先にデータを保存してください。", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show("現在の患者データをCSVに出力する前に保存しますか？", "保存確認", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Cancel)
+                return;
 
             if (result == MessageBoxResult.Yes)
-            {
-                ShowPatientListWindow();
-            }
+                SaveButton_Click(sender, e);
+
+            _exportService.ExportPatientToCSV(_currentPatientId);
         }
-        // FIB-4インデックス計算用の年齢情報更新
-        private void UpdateFib4IndexAge()
+
+        private void ExportAllPatientsMenu_Click(object sender, RoutedEventArgs e)
         {
-            if (BloodTestCtrl != null && PatientDataCtrl != null)
-            {
-                // 患者データから年齢を取得
-                PatientData patientData = PatientDataCtrl.GetPatientData();
-                // 血液検査コントロールに年齢情報を渡す
-                BloodTestCtrl.SetPatientAge(patientData.Age);
-            }
+            _exportService.ExportAllPatientsToCSV();
         }
+
         // 終了メニューのクリックイベントハンドラ
         private void ExitMenu_Click(object sender, RoutedEventArgs e)
         {
-            Close(); // ウィンドウを閉じる（OnClosingイベントが発生）
+            Close();
         }
 
         // ウィンドウ閉じる時のイベントハンドラ
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            // 閉じる前に確認ダイアログを表示
             MessageBoxResult result = MessageBox.Show(
                 "アプリケーションを終了しますか？\n保存されていないデータは失われます。",
                 "終了確認",
@@ -683,58 +784,12 @@ namespace DataEntryHelper
 
             if (result == MessageBoxResult.No)
             {
-                e.Cancel = true; // 終了をキャンセル
+                e.Cancel = true;
             }
             else
             {
-                base.OnClosing(e); // 通常の終了処理
+                base.OnClosing(e);
             }
-        }
-
-        // 血液検査インポートメニューのクリックイベントハンドラ
-        private void ImportBloodTestFromClipboard_Click(object sender, RoutedEventArgs e)
-        {
-            if (BloodTestCtrl != null)
-            {
-                // 血液検査タブに切り替え
-                MainTabControl.SelectedIndex = 3; // 血液検査タブのインデックスに合わせて調整
-
-                // インポート実行
-                BloodTestCtrl.ImportFromClipboard();
-            }
-        }
-
-        private void ExportCurrentPatientMenu_Click(object sender, RoutedEventArgs e)
-        {
-            // 新規モードの場合や患者IDが設定されていない場合はエラー
-            if (_isNewMode || string.IsNullOrEmpty(_currentPatientId))
-            {
-                MessageBox.Show("現在の患者データが保存されていません。\n先にデータを保存してください。", "警告", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // 現在の患者データを保存確認
-            MessageBoxResult result = MessageBox.Show("現在の患者データをCSVに出力する前に保存しますか？", "保存確認", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Cancel)
-            {
-                return;
-            }
-
-            if (result == MessageBoxResult.Yes)
-            {
-                // 保存ボタンのクリックイベントを呼び出す
-                SaveButton_Click(sender, e);
-            }
-
-            // CSVエクスポート
-            _exportService.ExportPatientToCSV(_currentPatientId);
-        }
-
-        private void ExportAllPatientsMenu_Click(object sender, RoutedEventArgs e)
-        {
-            // 全患者データをCSVエクスポート
-            _exportService.ExportAllPatientsToCSV();
         }
     }
 }

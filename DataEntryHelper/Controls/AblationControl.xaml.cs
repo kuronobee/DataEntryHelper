@@ -88,7 +88,7 @@ namespace DataEntryHelper.Controls
         }
 
         // アブレーション情報が変更されたときのイベントハンドラ
-        private void UpdateAblationSummary(object sender, EventArgs e)
+        private void UpdateAblationSummary(object? sender, EventArgs? e)
         {
             GenerateAblationSummary();
         }

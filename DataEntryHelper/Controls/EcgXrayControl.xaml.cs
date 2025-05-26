@@ -262,14 +262,9 @@ namespace DataEntryHelper.Controls
         // ComboBoxからテキスト取得のヘルパーメソッド
         private string GetComboBoxText(ComboBox comboBox)
         {
-            if (comboBox.SelectedItem == null)
-                return string.Empty;
+            ComboBoxItem? selectedItem = comboBox.SelectedItem as ComboBoxItem;
 
-            ComboBoxItem selectedItem = comboBox.SelectedItem as ComboBoxItem;
-            if (selectedItem == null)
-                return string.Empty;
-
-            return selectedItem.Content.ToString();
+            return selectedItem?.Content?.ToString() ?? "";
         }
 
         // 心電図・レントゲンデータの取得
