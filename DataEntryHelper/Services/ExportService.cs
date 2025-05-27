@@ -155,7 +155,7 @@ namespace DataEntryHelper.Services
                 // 血液検査情報
                 "TP(g/dL)", "Alb(g/dL)", "BUN(mg/dL)", "Cre(mg/dL)", "CRP(mg/dL)", "CK(U/L)",
                 "AST(U/L)", "ALT(U/L)", "LDL(mg/dL)", "HDL(mg/dL)", "TG(mg/dL)", "HbA1c(%)",
-                "Glu(mg/dL)", "Hb(g/dL)", "WBC(/μL)", "Plt(/μL)", "PT-INR", "APTT(秒)",
+                "Glu(mg/dL)", "Hb(g/dL)", "WBC(×10³/μL)", "Plt(×10³/μL)", "PT-INR", "APTT(秒)",
                 "FIB4-index", "UA(mg/dL)", "BNP(pg/mL)",
         
                 // 心電図・レントゲン情報
@@ -197,7 +197,6 @@ namespace DataEntryHelper.Services
 
             return string.Join(",", headers);
         }
-
         /// <summary>
         /// 患者データからCSVデータ行を生成
         /// </summary>

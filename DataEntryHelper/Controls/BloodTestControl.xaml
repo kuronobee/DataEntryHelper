@@ -91,10 +91,10 @@
                     <TextBox Grid.Row="6" Grid.Column="3" x:Name="HbTextBox" TextChanged="TextBox_TextChanged"/>
 
                     <!-- Row 7 - 血算 -->
-                    <Label Grid.Row="7" Grid.Column="0" Content="WBC (/μL):"/>
+                    <Label Grid.Row="7" Grid.Column="0" Content="WBC (×10³/μL):"/>
                     <TextBox Grid.Row="7" Grid.Column="1" x:Name="WbcTextBox" TextChanged="TextBox_TextChanged"/>
 
-                    <Label Grid.Row="7" Grid.Column="2" Content="Plt (/μL):"/>
+                    <Label Grid.Row="7" Grid.Column="2" Content="Plt (×10³/μL):"/>
                     <TextBox Grid.Row="7" Grid.Column="3" x:Name="PltTextBox" TextChanged="TextBox_TextChanged"/>
 
                     <!-- Row 8 - 凝固 -->
@@ -107,7 +107,7 @@
                     <!-- Row 9 - 肝繊維化・尿酸 -->
                     <Label Grid.Row="9" Grid.Column="0" Content="Fib4-index:"/>
                     <TextBox Grid.Row="9" Grid.Column="1" x:Name="Fib4iTextBox" IsReadOnly="True" Background="LightGray"/>
-                    
+
                     <Label Grid.Row="9" Grid.Column="2" Content="UA (mg/dL):"/>
                     <TextBox Grid.Row="9" Grid.Column="3" x:Name="UaTextBox" TextChanged="TextBox_TextChanged"/>
 

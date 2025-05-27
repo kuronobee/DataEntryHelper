@@ -42,8 +42,8 @@ namespace DataEntryHelper.Controls
                 
                 // 血算
                 {"Hb", (13.0, 17.0, "g/dL", "ヘモグロビン")},
-                {"WBC", (3500, 9000, "/μL", "白血球数")},
-                {"Plt", (150000, 350000, "/μL", "血小板数")},
+                {"WBC", (3.5, 9.0, "×10³/μL", "白血球数")},
+                {"Plt", (150, 350, "×10³/μL", "血小板数")},
                 
                 // 凝固
                 {"PT-INR", (0.8, 1.2, "-", "プロトロンビン時間国際標準比")},
@@ -54,7 +54,6 @@ namespace DataEntryHelper.Controls
                 {"UA", (3.0, 7.0, "mg/dL", "尿酸")},
                 {"BNP", (0, 18.4, "pg/mL", "脳性ナトリウム利尿ペプチド")}
             };
-
         public BloodTestControl()
         {
             InitializeComponent();
@@ -157,7 +156,7 @@ namespace DataEntryHelper.Controls
                 try
                 {
                     // FIB-4 = 年齢(years) × AST(U/L) / (血小板数(10^9/L) × √ALT(U/L))
-                    double pltInCorrectUnit = plt / 1000; // 10^3/μL から 10^9/L への変換
+                    double pltInCorrectUnit = plt; // 10^3/μL
                     double fib4 = (_patientAge * ast) / (pltInCorrectUnit * Math.Sqrt(alt));
                     Fib4iTextBox.Text = fib4.ToString("F2");
                 }
@@ -441,11 +440,11 @@ namespace DataEntryHelper.Controls
                     return;
                 }
 
-                // 各テキストボックスにデータを設定
+                // 各テキストボックスにデータを設定（新しいマッピングに対応）
                 SetValueIfPresent(extractedData, "TP", TpTextBox);
                 SetValueIfPresent(extractedData, "Alb", AlbTextBox);
                 SetValueIfPresent(extractedData, "BUN", BunTextBox);
-                SetValueIfPresent(extractedData, "CRE", CreTextBox);
+                SetValueIfPresent(extractedData, "Cre", CreTextBox);
                 SetValueIfPresent(extractedData, "CRP", CrpTextBox);
                 SetValueIfPresent(extractedData, "CK", CkTextBox);
                 SetValueIfPresent(extractedData, "AST", AstTextBox);
@@ -457,7 +456,7 @@ namespace DataEntryHelper.Controls
                 SetValueIfPresent(extractedData, "Glu", GluTextBox);
                 SetValueIfPresent(extractedData, "Hb", HbTextBox);
                 SetValueIfPresent(extractedData, "WBC", WbcTextBox);
-                SetValueIfPresent(extractedData, "PLT", PltTextBox);
+                SetValueIfPresent(extractedData, "Plt", PltTextBox);
                 SetValueIfPresent(extractedData, "PT-INR", PtInrTextBox);
                 SetValueIfPresent(extractedData, "APTT", ApttTextBox);
                 SetValueIfPresent(extractedData, "UA", UaTextBox);

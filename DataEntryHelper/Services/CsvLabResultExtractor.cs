@@ -1,53 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Windows;
-
 
 namespace DataEntryHelper.Services
 {
     public static class CsvLabResultExtractor
     {
         /// <summary>
-        /// CSV (OriginalName,OriginalUnit) を読み込んでマップを返す
+        /// 検査項目のマッピング定義
         /// </summary>
-        private static Dictionary<string, string> LoadTemplate(string csvPath)
+        private static readonly Dictionary<string, string> LabItemMapping = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            var lines = File.ReadAllLines(csvPath);
-            var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            // 1行目はヘッダーなのでスキップ
-            foreach (var line in lines.Skip(1))
-            {
-                // カンマで分割（OriginalName,OriginalUnit のみなので単純にOK）
-                var parts = line.Split(',');
-                if (parts.Length < 2) continue;
-
-                var name = parts[0].Trim().Trim('"');
-                var unit = parts[1].Trim().Trim('"');
-
-                if (!map.ContainsKey(name))
-                    map[name] = unit;
-            }
-
-            return map;
-        }
+            {"TP", "TP"},
+            {"ALB", "Alb"},
+            {"BUN", "BUN"},
+            {"CRE", "Cre"},
+            {"CRP", "CRP"},
+            {"CK", "CK"},
+            {"AST", "AST"},
+            {"ALT", "ALT"},
+            {"LDL-C", "LDL-C"},
+            {"HDL-C", "HDL-C"},
+            {"TG", "TG"},
+            {"HbA1c", "HbA1c"},
+            {"GLU", "Glu"},
+            {"Hb", "Hb"},
+            {"WBC", "WBC"},
+            {"PLT", "Plt"},
+            {"INR", "PT-INR"},
+            {"APTT", "APTT"},
+            {"UA", "UA"},
+            {"BNP", "BNP"}
+        };
 
         /// <summary>
-        /// テキストから、CSVで指定された項目＋単位を持つ数値を抽出する
+        /// テキストから、マッピングで指定された項目の数値を抽出する
         /// </summary>
-        [STAThread]
         public static IDictionary<string, string> ExtractFromText(string rawText)
         {
-            var csvPath = "target_templates.csv";
-            // ① テンプレート CSV を読み込む
-            var templateMap = LoadTemplate(csvPath);
+            // 結果辞書を初期化（空文字で埋める）
+            var result = LabItemMapping.Values.ToDictionary(v => v, v => string.Empty, StringComparer.OrdinalIgnoreCase);
 
-            // ② 結果辞書を初期化（空文字で埋める）
-            var result = templateMap.Keys.ToDictionary(k => k, k => string.Empty, StringComparer.OrdinalIgnoreCase);
-
-            // ④ 行ごとにパース
+            // 行ごとにパース
             var lines = rawText
                 .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -57,21 +51,47 @@ namespace DataEntryHelper.Services
                 if (!line.Contains("│")) continue;
 
                 var parts = line.Split('│');
-                if (parts.Length < 7) continue;
+                if (parts.Length < 3) continue; // 最低限、項目名と値が必要
 
-                var name = parts[1].Trim();  // OriginalName
-                var value = parts[2].Trim();  // 結果
-                var unit = parts[6].Trim();  // OriginalUnit
+                var itemName = parts[1].Trim();  // 検査項目名
+                var value = parts[2].Trim();     // 結果値
 
-                // マップに登録されていて単位が一致すれば抽出
-                if (templateMap.TryGetValue(name, out var expectedUnit)
-                    && string.Equals(unit, expectedUnit, StringComparison.OrdinalIgnoreCase))
+                // マッピングに登録されている項目かチェック
+                if (LabItemMapping.TryGetValue(itemName, out var mappedName))
                 {
-                    result[name] = value;
+                    // 数値部分のみを抽出（単位や記号を除去）
+                    var cleanValue = ExtractNumericValue(value);
+                    if (!string.IsNullOrEmpty(cleanValue))
+                    {
+                        result[mappedName] = cleanValue;
+                    }
                 }
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// 文字列から数値部分を抽出する
+        /// </summary>
+        /// <param name="value">抽出対象の文字列</param>
+        /// <returns>抽出された数値文字列</returns>
+        private static string ExtractNumericValue(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return string.Empty;
+
+            // 数値、小数点、マイナス記号のみを抽出
+            var numericChars = value.Where(c => char.IsDigit(c) || c == '.' || c == '-').ToArray();
+            var numericString = new string(numericChars);
+
+            // 有効な数値かチェック
+            if (double.TryParse(numericString, out _))
+            {
+                return numericString;
+            }
+
+            return string.Empty;
         }
     }
 }
